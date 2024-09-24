@@ -30,7 +30,7 @@ def draw_game(screen, game):
     draw_board(screen)
     draw_pieces(screen, game)
 def draw_board(screen):
-    colors = [p.Color(50, 205, 50), p.Color((255, 240, 220))]
+    colors = [p.Color("#779455"), p.Color("#ebecd0")]
     for x in range(8):
         for y in range(8):
             color = colors[(x+y)%2]
