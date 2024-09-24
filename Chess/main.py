@@ -28,14 +28,20 @@ def main():
         p.display.flip()
 def draw_game(screen, game):
     draw_board(screen)
-    draw_pieces(screen, game)
+    draw_pieces(screen, game.board)
 def draw_board(screen):
     colors = [p.Color("#779455"), p.Color("#ebecd0")]
     for x in range(8):
         for y in range(8):
             color = colors[(x+y)%2]
             p.draw.rect(screen, color, p.Rect(x*p_size, y*p_size, p_size, p_size))
-def draw_pieces(screen, game):
-    pass
+def draw_pieces(screen, board):
+    for x in range(8):
+        for y in range(8):
+            piece = board[y][x]
+            if piece != '':
+                screen.blit(chess_img[piece], p.Rect(x*p_size, y*p_size, p_size, p_size))
+
+
 if __name__ == '__main__':
     main()
