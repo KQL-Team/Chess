@@ -1,6 +1,5 @@
 import pygame as p
 import chess
-import PIL
 from PIL import Image, ImageEnhance
 chess_img = {}
 width = height = 720
@@ -16,7 +15,6 @@ def load_images():
 
 def main():
     p.init()
-    print(PIL.__version__)
     screen = p.display.set_mode((width, height))
     screen.fill(p.Color('white'))
     clock = p.time.Clock()
