@@ -1,9 +1,9 @@
 import pygame as p
 import chess
 import PIL
-from PIL import Image
+from PIL import Image, ImageEnhance
 chess_img = {}
-width = height = 600
+width = height = 720
 dim = 8
 p_size = width // dim
 FPS = 120
