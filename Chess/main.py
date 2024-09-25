@@ -1,31 +1,36 @@
 import pygame as p
 import chess
+import PIL
+from PIL import Image
 chess_img = {}
-width = height = 512
+width = height = 600
 dim = 8
 p_size = width // dim
 FPS = 120
 def load_images():
     chess_pieces = ['bR', 'bH', 'bB', 'bQ', 'bK', 'bP', 'wR', 'wH', 'wB', 'wQ', 'wK', 'wP']
     for piece in chess_pieces:
-        chess_img[piece] = p.image.load("Images/" + piece + ".png")
-        chess_img[piece] = p.transform.scale(chess_img[piece], (p_size, p_size))
+        img = Image.open("Images/" + piece + ".png")
+        img = img.resize((p_size, p_size), Image.LANCZOS)
+        chess_img[piece] = p.image.fromstring(img.tobytes(), img.size, img.mode).convert_alpha()
 
 def main():
     p.init()
+    print(PIL.__version__)
     screen = p.display.set_mode((width, height))
     screen.fill(p.Color('white'))
     clock = p.time.Clock()
     game = chess.Game()
     load_images()
-    while True:
+    run = True
+    while run:
         for event in p.event.get():
             if event.type == p.QUIT:
-                p.quit()
-                break
+                run = False
         draw_game(screen, game)
         clock.tick(FPS)
         p.display.flip()
+    p.quit()
 def draw_game(screen, game):
     draw_board(screen)
     draw_pieces(screen, game.board)
