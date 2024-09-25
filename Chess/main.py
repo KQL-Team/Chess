@@ -42,9 +42,9 @@ def draw_game(screen, game):
 
 
 def draw_board(screen):
-    colors = [p.Color("#779455"), p.Color("#ebecd0")]
-    for x in range(8):
-        for y in range(8):
+    colors = [p.Color(235, 236, 208), p.Color(119, 148, 85)]
+    for y in range(8):
+        for x in range(8):
             color = colors[(x + y) % 2]
             p.draw.rect(screen, color, p.Rect(x * p_size, y * p_size, p_size, p_size))
 
