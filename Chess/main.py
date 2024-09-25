@@ -9,8 +9,9 @@ width = height = 720
 dim = 8
 p_size = width // dim
 FPS = 240
-
 pygame.display.set_caption('Chess')
+
+
 def load_images():
     chess_pieces = ['bR', 'bH', 'bB', 'bQ', 'bK', 'bP', 'wR', 'wH', 'wB', 'wQ', 'wK', 'wP']
     for piece in chess_pieces:
@@ -38,7 +39,7 @@ def main():
                 pos = p.mouse.get_pos()
                 x = pos[1] // p_size
                 y = pos[0] // p_size
-                if (square_select == (x, y)):
+                if square_select == (x, y):
                     square_select = ()
                     player_move.clear()
                 else:
@@ -75,6 +76,8 @@ def draw_pieces(screen, board):
             piece = board[y][x]
             if piece != '':
                 screen.blit(chess_img[piece], p.Rect(x * p_size, y * p_size, p_size, p_size))
+
+
 def check_turn(color_turn, player_move, board):
     if (color_turn):
         cur = player_move[0]
@@ -84,6 +87,7 @@ def check_turn(color_turn, player_move, board):
         cur = player_move[0]
         if board[cur[0]][cur[1]] == '' or board[cur[0]][cur[1]][0] == 'w':
             player_move.clear()
+
 
 if __name__ == '__main__':
     main()
