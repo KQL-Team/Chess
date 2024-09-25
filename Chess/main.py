@@ -1,3 +1,4 @@
+import pygame
 import pygame as p
 from PIL import Image
 
@@ -7,9 +8,9 @@ chess_img = {}
 width = height = 720
 dim = 8
 p_size = width // dim
-FPS = 120
+FPS = 240
 
-
+pygame.display.set_caption('Chess')
 def load_images():
     chess_pieces = ['bR', 'bH', 'bB', 'bQ', 'bK', 'bP', 'wR', 'wH', 'wB', 'wQ', 'wK', 'wP']
     for piece in chess_pieces:
@@ -25,11 +26,29 @@ def main():
     clock = p.time.Clock()
     game = chess.Game()
     load_images()
+    square_select = ()
+    player_move = []
+    white_turn = True
     run = True
     while run:
         for event in p.event.get():
             if event.type == p.QUIT:
                 run = False
+            elif event.type == p.MOUSEBUTTONDOWN:
+                pos = p.mouse.get_pos()
+                x = pos[1] // p_size
+                y = pos[0] // p_size
+                if (square_select == (x, y)):
+                    square_select = ()
+                    player_move.clear()
+                else:
+                    square_select = (x, y)
+                    player_move.append(square_select)
+                    check_turn(white_turn, player_move, game.board)
+                if len(player_move) == 2:
+                    white_turn = not white_turn
+                    game.move(player_move[0], player_move[1])
+                    player_move.clear()
         draw_game(screen, game)
         clock.tick(FPS)
         p.display.flip()
@@ -55,7 +74,15 @@ def draw_pieces(screen, board):
             piece = board[y][x]
             if piece != '':
                 screen.blit(chess_img[piece], p.Rect(x * p_size, y * p_size, p_size, p_size))
-
+def check_turn(color_turn, player_move, board):
+    if (color_turn):
+        cur = player_move[0]
+        if board[cur[0]][cur[1]] == '' or board[cur[0]][cur[1]][0] == 'b':
+            player_move.clear()
+    else:
+        cur = player_move[0]
+        if board[cur[0]][cur[1]] == '' or board[cur[0]][cur[1]][0] == 'w':
+            player_move.clear()
 
 if __name__ == '__main__':
     main()
