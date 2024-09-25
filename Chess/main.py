@@ -46,7 +46,8 @@ def main():
                     player_move.append(square_select)
                     check_turn(white_turn, player_move, game.board)
                 if len(player_move) == 2:
-                    white_turn = not white_turn
+                    if not game.restrict(player_move[0], player_move[1]):
+                        white_turn = not white_turn
                     game.move(player_move[0], player_move[1])
                     player_move.clear()
         draw_game(screen, game)
