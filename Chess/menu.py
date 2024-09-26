@@ -2,22 +2,31 @@ from modes import AIEasy, AIHard, pvp
 import pygame as p
 import random
 import math
+import config as cg
+warnings.simplefilter(action='ignore', category=FutureWarning)
 
 p.init()
 
-width = height = 720
-screen = p.display.set_mode((width, height))
-FPS = 120
 AnKing = p.transform.rotate(p.transform.scale(p.image.load("Images/king.png"), (75, 75)),40)
 AnQueen = p.transform.rotate(p.transform.scale(p.image.load("Images/queen.png"), (75, 75)),40)
 AnPawn = p.transform.rotate(p.transform.scale(p.image.load("Images/pawn.png"), (75, 75)),40)
 AnKnight = p.transform.rotate(p.transform.scale(p.image.load("Images/knight.png"), (75, 75)),40)
 clock = p.time.Clock()
+
 font = p.font.Font(None, 36)
 brown = p.color.THECOLORS["brown"]
 black = p.color.THECOLORS["black"]
 white = p.color.THECOLORS["seashell1"]
 gray = p.color.THECOLORS["grey44"]
+
+game_run = cg.game_run
+choice = cg.choice
+width = cg.width 
+height = cg.height
+dim = cg.dim
+p_size = width // dim
+FPS = cg.p_size
+screen = cg.screen 
 
 def draw_menu(choice, menu_run):
     screen.fill(p.Color(134, 165, 91))

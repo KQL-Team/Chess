@@ -1,17 +1,23 @@
 import pygame
 import pygame as p
 from PIL import Image
-
+import config as cg
 import chess
 
 chess_img = {}
-width = height = 720
-dim = 8
+
+game_run = cg.game_run
+choice = cg.choice
+width = cg.width 
+height = cg.height
+dim = cg.dim
 p_size = width // dim
-FPS = 240
+FPS = cg.p_size
+screen = cg.screen 
+pygame.display.set_caption('Chess')
 
 p.init()
-screen = p.display.set_mode((width, height))
+
 clock = p.time.Clock()
 game = chess.Game()
 square_select = ()
