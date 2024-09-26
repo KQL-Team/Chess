@@ -1,7 +1,10 @@
+import pygame
 import main
 import menu
 game_run = False
 choice = 0
+pygame.display.set_caption('Chess')
+
 while not game_run:
     game_run, choice = menu.run(game_run)
     print(choice)

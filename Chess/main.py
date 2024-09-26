@@ -9,7 +9,6 @@ width = height = 720
 dim = 8
 p_size = width // dim
 FPS = 240
-pygame.display.set_caption('Chess')
 
 p.init()
 screen = p.display.set_mode((width, height))

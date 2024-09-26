@@ -1,15 +1,12 @@
 from modes import AIEasy, AIHard, pvp
 import pygame as p
 import random
-import warnings
 import math
-warnings.simplefilter(action='ignore', category=FutureWarning)
 
 p.init()
 
 width = height = 720
 screen = p.display.set_mode((width, height))
-p.display.set_caption("King of Rap")
 FPS = 120
 AnKing = p.transform.rotate(p.transform.scale(p.image.load("Images/king.png"), (75, 75)),40)
 AnQueen = p.transform.rotate(p.transform.scale(p.image.load("Images/queen.png"), (75, 75)),40)
