@@ -3,6 +3,7 @@ import pygame as p
 import random
 import math
 import config as cg
+import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 p.init()
