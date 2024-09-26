@@ -11,7 +11,13 @@ p_size = width // dim
 FPS = 240
 pygame.display.set_caption('Chess')
 
-
+p.init()
+screen = p.display.set_mode((width, height))
+clock = p.time.Clock()
+game = chess.Game()
+square_select = ()
+player_move = []
+white_turn = True
 def load_images():
     chess_pieces = ['bR', 'bH', 'bB', 'bQ', 'bK', 'bP', 'wR', 'wH', 'wB', 'wQ', 'wK', 'wP']
     for piece in chess_pieces:
@@ -19,43 +25,35 @@ def load_images():
         img = img.resize((p_size, p_size), Image.LANCZOS)
         chess_img[piece] = p.image.fromstring(img.tobytes(), img.size, img.mode).convert_alpha()
 
+load_images()
 
-def main():
-    p.init()
-    screen = p.display.set_mode((width, height))
+def main(game_run):
+    global square_select
+    global white_turn
     screen.fill(p.Color('white'))
-    clock = p.time.Clock()
-    game = chess.Game()
-    load_images()
-    square_select = ()
-    player_move = []
-    white_turn = True
-    run = True
-    while run:
-        for event in p.event.get():
-            if event.type == p.QUIT:
-                run = False
-            elif event.type == p.MOUSEBUTTONDOWN:
-                pos = p.mouse.get_pos()
-                x = pos[1] // p_size
-                y = pos[0] // p_size
-                if square_select == (x, y):
-                    square_select = ()
-                    player_move.clear()
-                else:
-                    square_select = (x, y)
-                    player_move.append(square_select)
-                    check_turn(white_turn, player_move, game.board)
-                if len(player_move) == 2:
-                    if not game.restrict(player_move[0], player_move[1]):
-                        white_turn = not white_turn
+    for event in p.event.get():
+        if event.type == p.QUIT:
+            game_run = False
+        elif event.type == p.MOUSEBUTTONDOWN:
+            pos = p.mouse.get_pos()
+            x = pos[1] // p_size
+            y = pos[0] // p_size
+            if square_select == (x, y):
+                square_select = ()
+                player_move.clear()
+            else:
+                square_select = (x, y)
+                player_move.append(square_select)
+                check_turn(white_turn, player_move, game.board)
+            if len(player_move) == 2:
+                if not game.restrict(player_move[0], player_move[1]):
+                    white_turn = not white_turn
                     game.move(player_move[0], player_move[1])
                     player_move.clear()
-        draw_game(screen, game)
-        clock.tick(FPS)
-        p.display.flip()
-    p.quit()
-
+    draw_game(screen, game)
+    clock.tick(FPS)
+    p.display.flip()
+    return game_run
 
 def draw_game(screen, game):
     draw_board(screen)
@@ -88,6 +86,3 @@ def check_turn(color_turn, player_move, board):
         if board[cur[0]][cur[1]] == '' or board[cur[0]][cur[1]][0] == 'w':
             player_move.clear()
 
-
-if __name__ == '__main__':
-    main()
