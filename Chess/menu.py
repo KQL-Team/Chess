@@ -1,18 +1,20 @@
 from modes import AIEasy, AIHard, pvp
 import pygame as p
 import random
+import warnings
 import math
+warnings.simplefilter(action='ignore', category=FutureWarning)
 
 p.init()
 
 width = height = 512
 screen = p.display.set_mode((width, height))
 p.display.set_caption("King of Rap")
-FPS = 240
-AnKing = p.transform.rotate(p.transform.scale(p.image.load("Chess\Images\king.png"), (75, 75)),40)
-AnQueen = p.transform.rotate(p.transform.scale(p.image.load("Chess\Images\queen.png"), (75, 75)),40)
-AnPawn = p.transform.rotate(p.transform.scale(p.image.load("Chess\Images\pawn.png"), (75, 75)),40)
-AnKnight = p.transform.rotate(p.transform.scale(p.image.load("Chess\Images\knight.png"), (75, 75)),40)
+FPS = 120
+AnKing = p.transform.rotate(p.transform.scale(p.image.load("Images/king.png"), (75, 75)),40)
+AnQueen = p.transform.rotate(p.transform.scale(p.image.load("Images/queen.png"), (75, 75)),40)
+AnPawn = p.transform.rotate(p.transform.scale(p.image.load("Images/pawn.png"), (75, 75)),40)
+AnKnight = p.transform.rotate(p.transform.scale(p.image.load("Images/knight.png"), (75, 75)),40)
 
 font = p.font.Font(None, 36)
 brown = p.color.THECOLORS["brown"]
@@ -63,32 +65,27 @@ def draw_menu():
                     p.quit()
                     # Thêm mã để gọi file chế độ AIHard
 
-def draw_falling_pieces():
+def random_pieces():
     pieces = [AnKing, AnQueen, AnPawn, AnKnight]
-    for piece in pieces:
-        x = random.randint(0, width - 20)
-        y = -50
-        speed = random.randint(10, 15)
-        color = p.color.THECOLORS["white"]
-
-        while y < height:
-            screen.fill(p.color.THECOLORS["chartreuse4"]) 
-            draw_menu() 
-            screen.blit(piece, (x, y)) 
-            p.display.flip()
-            y += speed
-            p.time.delay(50)
-
+    x = random.randint(0, width - 20)
+    y = -50
+    random_piece = random.choices(pieces)[0]
+    falling_pieces = (random_piece, [x,y])
+    return falling_pieces
 
 running = True
 clock = p.time.Clock()
+falling_piece = random_pieces()
 while running:
+    falling_piece[1][1] += 1
     clock.tick(FPS)
     for event in p.event.get():
         if event.type == p.QUIT:
             running = False
-
     screen.fill(p.color.THECOLORS["chartreuse4"])  
     draw_menu()
-    draw_falling_pieces()  
+    screen.blit(falling_piece[0], falling_piece[1])
+    if(falling_piece[1][1]>height):
+        falling_piece = random_pieces()
     p.display.flip()
+p.quit()
