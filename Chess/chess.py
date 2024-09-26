@@ -14,21 +14,7 @@ class Game():
     def move(self, src, dest):
         if self.restrict(src, dest):
             return
-
         piece = self.board[src[0]][src[1]]
-
-        # if piece[1] == 'H' and not self.h_move(src, dest):
-        #     return
-        # elif piece[1] == 'R' and not self.r_move(src, dest):
-        #     return
-        # elif piece[1] == 'B' and not self.b_move(src, dest):
-        #     return
-        # elif piece[1] == 'Q' and not self.queen_move(src, dest):
-        #     return
-        # elif piece[1] == 'K' and not self.king_move(src, dest):
-        #     return
-        # elif piece[1] == 'p' and not self.pawn_move(src, dest):
-        #     return
 
         if not self.remove_piece(src, dest):
             temp = self.board[src[0]][src[1]]
@@ -37,6 +23,7 @@ class Game():
         else:
             self.board[dest[0]][dest[1]] = self.board[src[0]][src[1]]
             self.board[src[0]][src[1]] = ''
+        self.transform_pawn(src, dest)
 
     def restrict(self, src, dest):
         first_char = self.board[src[0]][src[1]][1]
@@ -53,10 +40,12 @@ class Game():
             return True
         elif first_char == 'K' and not self.king_move(src, dest):
             return True
+        elif first_char == 'P' and not self.pawn_move(src, dest):
+            return True
         return False
 
     def remove_piece(self, src, dest):
-        if self.board[src[0]][src[1]] != '' and self.board[dest[0]][dest[1]] != '':
+        if self.board[dest[0]][dest[1]] != '':
             if self.board[src[0]][src[1]][0] != self.board[dest[0]][dest[1]][0]:
                 return True
         return False
@@ -98,6 +87,50 @@ class Game():
         row_diff = abs(src[0] - dest[0])
         col_diff = abs(src[1] - dest[1])
         return row_diff <= 1 and col_diff <= 1
-
     def pawn_move(self, src, dest):
-        return
+        piece = self.board[src[0]][src[1]]
+        if piece[0] == 'b':
+            if not self.pawn_remove(src, dest) :
+                if self.board[dest[0]][dest[1]] == '':
+                    if src[0] == 1:
+                        if dest[0] <= src[0] + 2 and dest[1] == src[1]:
+                            return True
+                    else:
+                        if dest[0] <= src[0] + 1 and dest[1] == src[1]:
+                            return True
+            else:
+                if src[0] == 1:
+                    if dest[0] <= src[0]+2 and abs(dest[1]- src[1])<=1:
+                        return True
+                    else:
+                        if dest[0] <= src[0] + 1 and abs(dest[1]- src[1])<=1:
+                            return True
+        else:
+            if not self.pawn_remove(src, dest) :
+                if self.board[dest[0]][dest[1]] == '':
+                    if src[0] == 6:
+                        if dest[0] >= src[0] - 2 and dest[1] == src[1]:
+                            return True
+                    else:
+                        if dest[0] >= src[0] - 1 and dest[1] == src[1]:
+                            return True
+            else:
+                if abs(dest[1]- src[1])<=1:
+                    return True
+        return False
+    def pawn_remove(self, src, dest):
+        piece = self.board[src[0]][src[1]]
+        if piece[0] == 'b':
+            if self.board[dest[0]][dest[1]] != '' and self.board[dest[0]][dest[1]][0] != self.board[src[0]][src[1]][0]:
+                return (src[0]+1 == dest[0] and (src[1]+1 == dest[1] or src[1]-1 == dest[1]))
+        else:
+            if self.board[dest[0]][dest[1]] != '' and self.board[dest[0]][dest[1]][0] != self.board[src[0]][src[1]][0]:
+                return (src[0] -1  == dest[0] and (src[1] + 1 == dest[1] or src[1] - 1 == dest[1]))
+    def transform_pawn(self, src, dest):
+        piece = self.board[dest[0]][dest[1]]
+        if piece[0] == 'b' and piece[1] == 'P':
+            if dest[0] == 8:
+                self.board[dest[0]][dest[1]] = 'b Q'
+        if piece[0] == 'w' and piece[1] == 'P':
+            if dest[0] == 0:
+                self.board[dest[0]][dest[1]] = 'wQ'
