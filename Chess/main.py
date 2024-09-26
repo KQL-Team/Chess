@@ -54,7 +54,7 @@ def main(game_run):
                 if not game.restrict(player_move[0], player_move[1]):
                     white_turn = not white_turn
                     game.move(player_move[0], player_move[1])
-                    player_move.clear()
+                player_move.clear()
     draw_game(screen, game)
     clock.tick(FPS)
     p.display.flip()

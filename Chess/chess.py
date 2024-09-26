@@ -17,18 +17,18 @@ class Game():
 
         piece = self.board[src[0]][src[1]]
 
-        if piece[1] == 'H' and not self.h_move(src, dest):
-            return
-        elif piece[1] == 'R' and not self.r_move(src, dest):
-            return
-        elif piece[1] == 'B' and not self.b_move(src, dest):
-            return
-        elif piece[1] == 'Q' and not self.queen_move(src, dest):
-            return
-        elif piece[1] == 'K' and not self.king_move(src, dest):
-            return
-        elif piece[1] == 'p' and not self.pawn_move(src, dest):
-            return
+        # if piece[1] == 'H' and not self.h_move(src, dest):
+        #     return
+        # elif piece[1] == 'R' and not self.r_move(src, dest):
+        #     return
+        # elif piece[1] == 'B' and not self.b_move(src, dest):
+        #     return
+        # elif piece[1] == 'Q' and not self.queen_move(src, dest):
+        #     return
+        # elif piece[1] == 'K' and not self.king_move(src, dest):
+        #     return
+        # elif piece[1] == 'p' and not self.pawn_move(src, dest):
+        #     return
 
         if not self.remove_piece(src, dest):
             temp = self.board[src[0]][src[1]]
@@ -39,9 +39,20 @@ class Game():
             self.board[src[0]][src[1]] = ''
 
     def restrict(self, src, dest):
+        first_char = self.board[src[0]][src[1]][1]
         if self.board[src[0]][src[1]] != '' and self.board[dest[0]][dest[1]] != '':
             if self.board[src[0]][src[1]][0] == self.board[dest[0]][dest[1]][0]:
                 return True
+        if first_char == 'H' and not self.h_move(src, dest):
+            return True
+        elif first_char == 'R' and not self.r_move(src, dest):
+            return True
+        elif first_char == 'B' and not self.b_move(src, dest):
+            return True
+        elif first_char == 'Q' and not self.queen_move(src, dest):
+            return True
+        elif first_char == 'K' and not self.king_move(src, dest):
+            return True
         return False
 
     def remove_piece(self, src, dest):
@@ -81,7 +92,7 @@ class Game():
         return True
 
     def queen_move(self, src, dest):
-        return self.h_move(src, dest) or self.b_move(src, dest)
+        return self.r_move(src, dest) or self.b_move(src, dest)
 
     def king_move(self, src, dest):
         row_diff = abs(src[0] - dest[0])
