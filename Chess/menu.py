@@ -81,7 +81,10 @@ def draw_menu(choice, menu_run):
 
 def random_pieces():
     pieces = [AnKing, AnQueen, AnPawn, AnKnight]
-    x = random.randint(0, width - 20)
+    if random.random() < 0.5:
+        x = random.randint(0, 150)
+    else:
+        x = random.randint(460, width-80)
     y = -50
     random_piece = random.choices(pieces)[0]
     falling_pieces = (random_piece, [x, y])
@@ -91,12 +94,14 @@ def random_pieces():
 falling_piece = random_pieces()
 falling_piece2 = random_pieces()
 
+count = 0
 
 def run(game_run):
+    speed = 1.5
+    global count
     global falling_piece
-    # global falling_piece2
-    falling_piece[1][1] += 1
-    count = 0
+    global falling_piece2
+    falling_piece[1][1] += speed
     clock.tick(FPS)
     for event in p.event.get():
         if event.type == p.QUIT:
@@ -108,12 +113,12 @@ def run(game_run):
     if falling_piece[1][1] > height/2:
         count = 1
     if count == 1:
-        falling_piece2[1][1] += 1
+        falling_piece2[1][1] += speed
         screen.blit(falling_piece2[0], falling_piece2[1])
     if falling_piece[1][1] > height:
         falling_piece = random_pieces()
     if falling_piece2[1][1] > height:
-        falling_piece = random_pieces()
+        falling_piece2 = random_pieces()
 
     p.display.flip()
     return game_run, choice
