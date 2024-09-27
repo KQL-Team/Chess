@@ -13,11 +13,12 @@ p.init()
 
 AnKing = p.transform.rotate(p.transform.scale(p.image.load("Images/king.png"), (75, 75)), 40)
 AnQueen = p.transform.rotate(p.transform.scale(p.image.load("Images/queen.png"), (75, 75)), 40)
-AnPawn = p.transform.rotate(p.transform.scale(p.image.load("Images/pawn.png"), (75, 75)), 40)
+AnPawn = p.transform.rotate(p.transform.scale(p.image.load("Images/pawn.png"), (65, 65)), 40)
 AnKnight = p.transform.rotate(p.transform.scale(p.image.load("Images/knight.png"), (75, 75)), 40)
 clock = p.time.Clock()
 
 font = p.font.SysFont("Georgia", 23)
+font2 = p.font.SysFont("Georgia", 19)
 brown = p.Color(138,50,36)
 black = p.color.THECOLORS["black"]
 white = p.color.THECOLORS["seashell1"]
@@ -35,13 +36,13 @@ image = p.transform.smoothscale(p.image.load("Images/background.png"), (720, 720
 def draw_menu(choice, menu_run):
     screen.blit(image, (0, 0))
 
-    # title_text = font.render("Racism's Chess", True, white)
-    # title_rect = title_text.get_rect(center=(width // 2, 50))
-    # screen.blit(title_text, title_rect)
-    #
-    # subtitle_text = font.render("by KQL AI Company", True, white)
-    # subtitle_rect = subtitle_text.get_rect(center=(width // 2, 80))
-    # screen.blit(subtitle_text, subtitle_rect)
+    title_text = font.render("Chess Game", True, white)
+    title_rect = title_text.get_rect(center=(width // 2, 50))
+    screen.blit(title_text, title_rect)
+
+    subtitle_text = font2.render("by KQL AI Company", True, white)
+    subtitle_rect = subtitle_text.get_rect(center=(width // 2, 80))
+    screen.blit(subtitle_text, subtitle_rect)
 
     button_width = 200
     button_height = 65
@@ -58,8 +59,8 @@ def draw_menu(choice, menu_run):
     ]
 
     for button in buttons:
-        p.draw.rect(screen, brown, button["rect"], border_radius=25)
-        button_text = font.render(button["text"], True, black)
+        p.draw.rect(screen, brown, button["rect"], border_radius=20)
+        button_text = font.render(button["text"], True, white)
         button_text_rect = button_text.get_rect(center=button["rect"].center)
         screen.blit(button_text, button_text_rect)
 
