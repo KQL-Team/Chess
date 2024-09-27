@@ -159,7 +159,7 @@ class Game():
             for y in range(8):
                 if self.board[x][y] != '' and self.board[x][y][0] == 'b':
                     temp = np.where(self.board == 'wK')
-                    if temp[0] and not self.restrict((x,y), (temp[0][0], temp[1][0])):
+                    if temp[0].size > 0 and not self.restrict((x,y), (temp[0][0], temp[1][0])):
                         return True
         return False
     def check_black(self):
@@ -167,6 +167,6 @@ class Game():
             for y in range(8):
                 if self.board[x][y] != '' and self.board[x][y][0] == 'w':
                     temp = np.where(self.board == 'bK')
-                    if temp[0] and not self.restrict((x,y), (temp[0][0], temp[1][0])):
+                    if temp[0].size > 0 and not self.restrict((x,y), (temp[0][0], temp[1][0])):
                         return True
         return False
