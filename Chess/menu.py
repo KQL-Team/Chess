@@ -1,3 +1,5 @@
+import pygame
+
 from modes import AIEasy, AIHard, pvp
 import pygame as p
 import random
@@ -29,10 +31,9 @@ dim = cg.dim
 p_size = width // dim
 FPS = cg.p_size
 screen = cg.screen
-
-
+image = p.transform.scale(p.image.load("Images/background.png"), (720, 720))
 def draw_menu(choice, menu_run):
-    screen.fill(p.Color(134, 165, 91))
+    screen.blit(image, (0, 0))
 
     title_text = font.render("Racism's Chess", True, white)
     title_rect = title_text.get_rect(center=(width // 2, 50))
@@ -43,13 +44,13 @@ def draw_menu(choice, menu_run):
     screen.blit(subtitle_text, subtitle_rect)
 
     button_width = 200
-    button_height = 50
+    button_height = 65
     button_x = (width - button_width) // 2
-    button_y = 200
+    button_y = 280
     button_spacing = 20
 
     buttons = [
-        {"text": "pvp", "rect": p.Rect(button_x, button_y, button_width, button_height)},
+        {"text": "PvP", "rect": p.Rect(button_x, button_y, button_width, button_height)},
         {"text": "AIEasy",
          "rect": p.Rect(button_x, button_y + button_height + button_spacing, button_width, button_height)},
         {"text": "AIHard",
