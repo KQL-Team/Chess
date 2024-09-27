@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
 import numpy as np
-import copy
 class Game():
     def __init__(self):
         self.board = np.array([
@@ -18,7 +17,10 @@ class Game():
     def move(self, src, dest):
         if self.restrict(src, dest):
             return
-        piece = self.board[src[0]][src[1]]
+
+        if self.move_leads_to_check(src, dest):
+            return
+
         if not self.remove_piece(src, dest):
             temp = self.board[src[0]][src[1]]
             self.board[src[0]][src[1]] = self.board[dest[0]][dest[1]]
@@ -27,6 +29,20 @@ class Game():
             self.board[dest[0]][dest[1]] = self.board[src[0]][src[1]]
             self.board[src[0]][src[1]] = ''
         self.transform_pawn(src, dest)
+
+    def move_leads_to_check(self, src, dest):
+        temp_board = self.board.copy()
+        temp_board[dest[0]][dest[1]] = temp_board[src[0]][src[1]]
+        temp_board[src[0]][src[1]] = ''
+
+        if self.board[src[0]][src[1]][0] == 'w':
+            temp_game = Game()
+            temp_game.board = temp_board
+            return temp_game.check_white()
+        else:
+            temp_game = Game()
+            temp_game.board = temp_board
+            return temp_game.check_black()
 
     def restrict(self, src, dest):
         first_char = self.board[src[0]][src[1]][1]
