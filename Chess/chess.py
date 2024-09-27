@@ -102,12 +102,8 @@ class Game():
                         if dest[0] <= src[0] + 1 and dest[1] == src[1]:
                             return True
             else:
-                if src[0] == 1:
-                    if dest[0] <= src[0]+2 and abs(dest[1]- src[1])<=1:
-                        return True
-                    else:
-                        if dest[0] <= src[0] + 1 and abs(dest[1]- src[1])<=1:
-                            return True
+                if abs(dest[1] - src[1]) <= 1:
+                    return True
         else:
             if not self.pawn_remove(src, dest) :
                 if self.board[dest[0]][dest[1]] == '':
