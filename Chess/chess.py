@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 import numpy as np
+import copy
 class Game():
     def __init__(self):
         self.board = np.array([
@@ -18,7 +19,6 @@ class Game():
         if self.restrict(src, dest):
             return
         piece = self.board[src[0]][src[1]]
-
         if not self.remove_piece(src, dest):
             temp = self.board[src[0]][src[1]]
             self.board[src[0]][src[1]] = self.board[dest[0]][dest[1]]
