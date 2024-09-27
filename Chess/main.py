@@ -34,30 +34,13 @@ def load_images():
 load_images()
 
 def main(game_run):
-    global square_select
-    global white_turn
+
     screen.fill(p.Color('white'))
     for event in p.event.get():
         if event.type == p.QUIT:
             game_run = False
         elif event.type == p.MOUSEBUTTONDOWN:
-            pos = p.mouse.get_pos()
-            x = pos[1] // p_size
-            y = pos[0] // p_size
-            if square_select == (x, y):
-                square_select = ()
-                player_move.clear()
-            else:
-                square_select = (x, y)
-                player_move.append(square_select)
-                check_turn(white_turn, player_move, game.board)
-
-            if len(player_move) == 2:
-                if not game.restrict(player_move[0], player_move[1]):
-                    white_turn = not white_turn
-                    game.move(player_move[0], player_move[1])
-                player_move.clear()
-                square_select = ()
+            white_turn = check_mouse(p, game)
     draw_game(screen, game, player_move)
     clock.tick(FPS)
     p.display.flip()
@@ -122,3 +105,24 @@ def black_king(game):
     x = temp[0][0]
     y = temp[1][0]
     p.draw.rect(screen, p.Color('red'), p.Rect(y * p_size, x * p_size, p_size, p_size))
+def check_mouse(p, game):
+    global square_select
+    global white_turn
+    pos = p.mouse.get_pos()
+    x = pos[1] // p_size
+    y = pos[0] // p_size
+    if square_select == (x, y):
+        square_select = ()
+        player_move.clear()
+    else:
+        square_select = (x, y)
+        player_move.append(square_select)
+        check_turn(white_turn, player_move, game.board)
+
+    if len(player_move) == 2:
+        if not game.restrict(player_move[0], player_move[1]):
+            white_turn = not white_turn
+            game.move(player_move[0], player_move[1])
+        player_move.clear()
+        square_select = ()
+    return white_turn
