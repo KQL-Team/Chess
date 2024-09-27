@@ -3,7 +3,7 @@ import pygame as p
 from PIL import Image
 import config as cg
 import chess
-
+import pygame.gfxdraw
 chess_img = {}
 
 game_run = cg.game_run
@@ -50,12 +50,19 @@ def main(game_run):
                 square_select = (x, y)
                 player_move.append(square_select)
                 check_turn(white_turn, player_move, game.board)
+
             if len(player_move) == 2:
                 if not game.restrict(player_move[0], player_move[1]):
                     white_turn = not white_turn
                     game.move(player_move[0], player_move[1])
                 player_move.clear()
-    draw_game(screen, game)
+
+    if len(player_move) == 1 :
+        draw_temp_board(screen, game, player_move)
+
+    else:
+        draw_board(screen)
+    draw_pieces(screen, game.board)
     clock.tick(FPS)
     p.display.flip()
     return game_run
@@ -80,7 +87,17 @@ def draw_pieces(screen, board):
             if piece != '':
                 screen.blit(chess_img[piece], p.Rect(x * p_size, y * p_size, p_size, p_size))
 
-
+def draw_temp_board(screen, game, player_move):
+    colors = [p.Color(235, 236, 208), p.Color(119, 148, 85), p.Color('#638046'), p.Color('green')]
+    for y in range(8):
+        for x in range(8):
+            color = colors[(x + y) % 2]
+            p.draw.rect(screen, color, p.Rect(x * p_size, y * p_size, p_size, p_size))
+            if not game.restrict(player_move[0], (y, x)):
+                pygame.gfxdraw.aacircle(screen, int((x+0.5) * p_size), int((y+0.5) * p_size), p_size//10, colors[2])
+                pygame.gfxdraw.filled_circle(screen, int((x+0.5) * p_size), int((y+0.5)* p_size), p_size//10, colors[2])
+                if game.remove_piece(player_move[0], (y, x)):
+                    p.draw.rect(screen, colors[3], p.Rect(x * p_size, y * p_size, p_size, p_size))
 def check_turn(color_turn, player_move, board):
     if (color_turn):
         cur = player_move[0]

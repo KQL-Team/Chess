@@ -96,10 +96,10 @@ class Game():
             if not self.pawn_remove(src, dest) :
                 if self.board[dest[0]][dest[1]] == '':
                     if src[0] == 1:
-                        if dest[0] <= src[0] + 2 and dest[1] == src[1]:
+                        if dest[0] <= src[0] + 2 and dest[1] == src[1] and dest[0] >= src[0]:
                             return True
                     else:
-                        if dest[0] <= src[0] + 1 and dest[1] == src[1]:
+                        if dest[0] <= src[0] + 1 and dest[1] == src[1] and dest[0] >= src[0]:
                             return True
             else:
                 if abs(dest[1] - src[1]) <= 1:
@@ -108,10 +108,10 @@ class Game():
             if not self.pawn_remove(src, dest) :
                 if self.board[dest[0]][dest[1]] == '':
                     if src[0] == 6:
-                        if dest[0] >= src[0] - 2 and dest[1] == src[1]:
+                        if dest[0] >= src[0] - 2 and dest[1] == src[1] and dest[0] <= src[0]:
                             return True
                     else:
-                        if dest[0] >= src[0] - 1 and dest[1] == src[1]:
+                        if dest[0] >= src[0] - 1 and dest[1] == src[1] and dest[0] <= src[0]:
                             return True
             else:
                 if abs(dest[1]- src[1])<=1:
@@ -127,7 +127,7 @@ class Game():
                 return (src[0] -1  == dest[0] and (src[1] + 1 == dest[1] or src[1] - 1 == dest[1]))
     def prompt_for_promotion_piece(self):
         window = tk.Tk()
-        window.title("Phong Quân")
+        window.title("Pawn Promotion")
         window.geometry("250x250")
 
         selected_piece = tk.StringVar(value='Q')
@@ -136,7 +136,7 @@ class Game():
             selected_piece.set(piece)
             window.destroy()
 
-        pieces = {'Q': 'Hậu', 'R': 'Xe', 'B': 'Tượng', 'N': 'Mã'}
+        pieces = {'Q': 'Queen', 'R': 'Rook', 'B': 'Bishop', 'N': 'Horse'}
         for piece, name in pieces.items():
             button = tk.Button(window, text=name, command=lambda p=piece: select_piece(p))
             button.pack(pady=10)
