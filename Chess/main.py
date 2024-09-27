@@ -56,6 +56,7 @@ def main(game_run):
                     white_turn = not white_turn
                     game.move(player_move[0], player_move[1])
                 player_move.clear()
+                square_select = ()
 
     if len(player_move) == 1 :
         draw_temp_board(screen, game, player_move)
@@ -88,7 +89,7 @@ def draw_pieces(screen, board):
                 screen.blit(chess_img[piece], p.Rect(x * p_size, y * p_size, p_size, p_size))
 
 def draw_temp_board(screen, game, player_move):
-    colors = [p.Color(235, 236, 208), p.Color(119, 148, 85), p.Color('#638046'), p.Color('green')]
+    colors = [p.Color(235, 236, 208), p.Color(119, 148, 85), p.Color('#638046'), p.Color('#F5F682')]
     for y in range(8):
         for x in range(8):
             color = colors[(x + y) % 2]
