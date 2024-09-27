@@ -1,4 +1,4 @@
-import pygame
+import pygame as p
 import main
 import menu
 game_run = False
