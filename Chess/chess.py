@@ -99,12 +99,8 @@ class Game():
                         if dest[0] <= src[0] + 1 and dest[1] == src[1]:
                             return True
             else:
-                if src[0] == 1:
-                    if dest[0] <= src[0]+2 and abs(dest[1]- src[1])<=1:
-                        return True
-                    else:
-                        if dest[0] <= src[0] + 1 and abs(dest[1]- src[1])<=1:
-                            return True
+                if abs(dest[1] - src[1]) <= 1:
+                    return True
         else:
             if not self.pawn_remove(src, dest) :
                 if self.board[dest[0]][dest[1]] == '':
@@ -129,8 +125,8 @@ class Game():
     def transform_pawn(self, src, dest):
         piece = self.board[dest[0]][dest[1]]
         if piece[0] == 'b' and piece[1] == 'P':
-            if dest[0] == 8:
-                self.board[dest[0]][dest[1]] = 'b Q'
+            if dest[0] == 7:
+                self.board[dest[0]][dest[1]] = 'bQ'
         if piece[0] == 'w' and piece[1] == 'P':
             if dest[0] == 0:
                 self.board[dest[0]][dest[1]] = 'wQ'
