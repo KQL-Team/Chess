@@ -1,9 +1,9 @@
 import tkinter as tk
 from tkinter import messagebox
-
+import numpy as np
 class Game():
     def __init__(self):
-        self.board = [
+        self.board = np.array([
             ['bR', 'bH', 'bB', 'bQ', 'bK', 'bB', 'bH', 'bR'],
             ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
             ['', '', '', '', '', '', '', ''],
@@ -12,7 +12,7 @@ class Game():
             ['', '', '', '', '', '', '', ''],
             ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
             ['wR', 'wH', 'wB', 'wQ', 'wK', 'wB', 'wH', 'wR']
-        ]
+        ])
 
     def move(self, src, dest):
         if self.restrict(src, dest):
@@ -154,3 +154,19 @@ class Game():
             if dest[0] == 0:
                 promotion_piece = self.prompt_for_promotion_piece()
                 self.board[dest[0]][dest[1]] = 'w' + promotion_piece
+    def check_white(self):
+        for x in range(8):
+            for y in range(8):
+                if self.board[x][y] != '' and self.board[x][y][0] == 'b':
+                    temp = np.where(self.board == 'wK')
+                    if temp[0] and not self.restrict((x,y), (temp[0][0], temp[1][0])):
+                        return True
+        return False
+    def check_black(self):
+        for x in range(8):
+            for y in range(8):
+                if self.board[x][y] != '' and self.board[x][y][0] == 'w':
+                    temp = np.where(self.board == 'bK')
+                    if temp[0] and not self.restrict((x,y), (temp[0][0], temp[1][0])):
+                        return True
+        return False
