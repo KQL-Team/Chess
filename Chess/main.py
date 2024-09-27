@@ -4,6 +4,7 @@ from PIL import Image
 import config as cg
 import chess
 import pygame.gfxdraw
+import numpy as np
 chess_img = {}
 
 game_run = cg.game_run
@@ -57,19 +58,21 @@ def main(game_run):
                     game.move(player_move[0], player_move[1])
                 player_move.clear()
                 square_select = ()
-
-    if len(player_move) == 1 :
-        draw_temp_board(screen, game, player_move)
-
-    else:
-        draw_board(screen)
-    draw_pieces(screen, game.board)
+    draw_game(screen, game, player_move)
     clock.tick(FPS)
     p.display.flip()
     return game_run
 
-def draw_game(screen, game):
-    draw_board(screen)
+def draw_game(screen, game, player_move):
+    if len(player_move) == 1:
+        draw_temp_board(screen, game, player_move)
+
+    else:
+        draw_board(screen)
+    if game.check_white():
+        white_king(game)
+    if game.check_black():
+        black_king(game)
     draw_pieces(screen, game.board)
 
 
@@ -99,6 +102,7 @@ def draw_temp_board(screen, game, player_move):
                 pygame.gfxdraw.filled_circle(screen, int((x+0.5) * p_size), int((y+0.5)* p_size), p_size//10, colors[2])
                 if game.remove_piece(player_move[0], (y, x)):
                     p.draw.rect(screen, colors[3], p.Rect(x * p_size, y * p_size, p_size, p_size))
+
 def check_turn(color_turn, player_move, board):
     if (color_turn):
         cur = player_move[0]
@@ -108,4 +112,13 @@ def check_turn(color_turn, player_move, board):
         cur = player_move[0]
         if board[cur[0]][cur[1]] == '' or board[cur[0]][cur[1]][0] == 'w':
             player_move.clear()
-
+def white_king(game):
+    temp = np.where(game.board == 'wK')
+    x = temp[0][0]
+    y = temp[1][0]
+    p.draw.rect(screen, p.Color('red'), p.Rect(y * p_size, x * p_size, p_size, p_size))
+def black_king(game):
+    temp = np.where(game.board == 'bK')
+    x = temp[0][0]
+    y = temp[1][0]
+    p.draw.rect(screen, p.Color('red'), p.Rect(y * p_size, x * p_size, p_size, p_size))
