@@ -1,6 +1,3 @@
-import tkinter as tk
-from tkinter import messagebox
-
 class Game():
     def __init__(self):
         self.board = [
@@ -125,32 +122,11 @@ class Game():
         else:
             if self.board[dest[0]][dest[1]] != '' and self.board[dest[0]][dest[1]][0] != self.board[src[0]][src[1]][0]:
                 return (src[0] -1  == dest[0] and (src[1] + 1 == dest[1] or src[1] - 1 == dest[1]))
-    def prompt_for_promotion_piece(self):
-        window = tk.Tk()
-        window.title("Phong Quân")
-        window.geometry("250x250")
-
-        selected_piece = tk.StringVar(value='Q')
-
-        def select_piece(piece):
-            selected_piece.set(piece)
-            window.destroy()
-
-        pieces = {'Q': 'Hậu', 'R': 'Xe', 'B': 'Tượng', 'N': 'Mã'}
-        for piece, name in pieces.items():
-            button = tk.Button(window, text=name, command=lambda p=piece: select_piece(p))
-            button.pack(pady=10)
-
-        window.mainloop()
-        return selected_piece.get()
-
     def transform_pawn(self, src, dest):
         piece = self.board[dest[0]][dest[1]]
         if piece[0] == 'b' and piece[1] == 'P':
             if dest[0] == 7:
-                promotion_piece = self.prompt_for_promotion_piece()
-                self.board[dest[0]][dest[1]] = 'b' + promotion_piece
+                self.board[dest[0]][dest[1]] = 'bQ'
         if piece[0] == 'w' and piece[1] == 'P':
             if dest[0] == 0:
-                promotion_piece = self.prompt_for_promotion_piece()
-                self.board[dest[0]][dest[1]] = 'w' + promotion_piece
+                self.board[dest[0]][dest[1]] = 'wQ'
