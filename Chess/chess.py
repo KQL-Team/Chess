@@ -18,9 +18,6 @@ class Game():
         if self.restrict(src, dest):
             return
 
-        if self.move_leads_to_check(src, dest):
-            return
-
         if not self.remove_piece(src, dest):
             temp = self.board[src[0]][src[1]]
             self.board[src[0]][src[1]] = self.board[dest[0]][dest[1]]
@@ -60,6 +57,8 @@ class Game():
         elif first_char == 'K' and not self.king_move(src, dest):
             return True
         elif first_char == 'P' and not self.pawn_move(src, dest):
+            return True
+        if self.move_leads_to_check(src, dest):
             return True
         return False
 
@@ -108,11 +107,15 @@ class Game():
         return row_diff <= 1 and col_diff <= 1
     def pawn_move(self, src, dest):
         piece = self.board[src[0]][src[1]]
+        temp = abs(src[0] - dest[0])
         if piece[0] == 'b':
             if not self.pawn_remove(src, dest) :
                 if self.board[dest[0]][dest[1]] == '':
                     if src[0] == 1:
                         if dest[0] <= src[0] + 2 and dest[1] == src[1] and dest[0] >= src[0]:
+                            for i in range(1, temp):
+                                if self.board[src[0]+i][src[1]] != '':
+                                    return False
                             return True
                     else:
                         if dest[0] <= src[0] + 1 and dest[1] == src[1] and dest[0] >= src[0]:
@@ -125,6 +128,9 @@ class Game():
                 if self.board[dest[0]][dest[1]] == '':
                     if src[0] == 6:
                         if dest[0] >= src[0] - 2 and dest[1] == src[1] and dest[0] <= src[0]:
+                            for i in range(1, temp):
+                                if self.board[src[0] - i][src[1]] != '':
+                                    return False
                             return True
                     else:
                         if dest[0] >= src[0] - 1 and dest[1] == src[1] and dest[0] <= src[0]:
