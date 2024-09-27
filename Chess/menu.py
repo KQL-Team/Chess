@@ -1,20 +1,18 @@
 from modes import AIEasy, AIHard, pvp
 import pygame as p
 import random
-import warnings
 import math
+import config as cg
+import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 p.init()
 
-width = height = 512
-screen = p.display.set_mode((width, height))
-p.display.set_caption("King of Rap")
-FPS = 120
 AnKing = p.transform.rotate(p.transform.scale(p.image.load("Images/king.png"), (75, 75)),40)
 AnQueen = p.transform.rotate(p.transform.scale(p.image.load("Images/queen.png"), (75, 75)),40)
 AnPawn = p.transform.rotate(p.transform.scale(p.image.load("Images/pawn.png"), (75, 75)),40)
 AnKnight = p.transform.rotate(p.transform.scale(p.image.load("Images/knight.png"), (75, 75)),40)
+clock = p.time.Clock()
 
 font = p.font.Font(None, 36)
 brown = p.color.THECOLORS["brown"]
@@ -22,7 +20,16 @@ black = p.color.THECOLORS["black"]
 white = p.color.THECOLORS["seashell1"]
 gray = p.color.THECOLORS["grey44"]
 
-def draw_menu():
+game_run = cg.game_run
+choice = cg.choice
+width = cg.width 
+height = cg.height
+dim = cg.dim
+p_size = width // dim
+FPS = cg.p_size
+screen = cg.screen 
+
+def draw_menu(choice, menu_run):
     screen.fill(p.Color(134, 165, 91))
 
     title_text = font.render("Racism's Chess", True, white)
@@ -57,13 +64,15 @@ def draw_menu():
         if button["rect"].collidepoint(mouse):
             if mouse_click[0]:
                 if i == 0:
-                    p.quit()
+                    choice = 1
+                    menu_run = True
                 elif i == 1:
                     p.quit()
                     # Thêm mã để gọi file chế độ AIEasy
                 elif i == 2:
                     p.quit()
                     # Thêm mã để gọi file chế độ AIHard
+    return choice, menu_run
 
 def random_pieces():
     pieces = [AnKing, AnQueen, AnPawn, AnKnight]
@@ -72,20 +81,18 @@ def random_pieces():
     random_piece = random.choices(pieces)[0]
     falling_pieces = (random_piece, [x,y])
     return falling_pieces
-
-running = True
-clock = p.time.Clock()
 falling_piece = random_pieces()
-while running:
+def run(game_run):
+    global falling_piece
     falling_piece[1][1] += 1
     clock.tick(FPS)
     for event in p.event.get():
         if event.type == p.QUIT:
-            running = False
-    screen.fill(p.color.THECOLORS["chartreuse4"])  
-    draw_menu()
+            game_run = True
+    screen.fill(p.color.THECOLORS["chartreuse4"])
+    choice, game_run = draw_menu(0, game_run)
     screen.blit(falling_piece[0], falling_piece[1])
     if(falling_piece[1][1]>height):
         falling_piece = random_pieces()
     p.display.flip()
-p.quit()
+    return game_run, choice
