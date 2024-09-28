@@ -60,7 +60,7 @@ def draw_game(screen, game, player_move):
 
 
 def draw_board(screen):
-    colors = [p.Color(235, 236, 208), p.Color("#795C34")]
+    colors = [p.Color(235, 236, 208), p.Color("#9A784F")]
     for y in range(8):
         for x in range(8):
             color = colors[(x + y) % 2]
@@ -75,7 +75,7 @@ def draw_pieces(screen, board):
                 screen.blit(chess_img[piece], p.Rect(x * p_size, y * p_size, p_size, p_size))
 
 def draw_temp_board(screen, game, player_move):
-    colors = [p.Color(235, 236, 208), p.Color("#795C34"), p.Color('#9A7B4F'), p.Color('#F5F682')]
+    colors = [p.Color(235, 236, 208), p.Color("#9A784F"), p.Color('#795C34'), p.Color('#F5F682')]
     for y in range(8):
         for x in range(8):
             color = colors[(x + y) % 2]
