@@ -1,6 +1,9 @@
 import tkinter as tk
 from tkinter import messagebox
 import numpy as np
+from prompt_toolkit.key_binding.bindings.named_commands import self_insert
+
+
 class Game():
     def __init__(self):
         self.board = np.array([
@@ -13,6 +16,7 @@ class Game():
             ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
             ['wR', 'wH', 'wB', 'wQ', 'wK', 'wB', 'wH', 'wR']
         ])
+        self.ck = np.zeros((10, 10), dtype=int)
 
     def move(self, src, dest):
         if self.restrict(src, dest):
@@ -86,6 +90,7 @@ class Game():
             for row in range(src[0] + step, dest[0], step):
                 if self.board[row][src[1]] != '':
                     return False
+        self.ck[src[0]][src[1]] = 1;
         return True
 
     def b_move(self, src, dest):
@@ -102,9 +107,49 @@ class Game():
         return self.r_move(src, dest) or self.b_move(src, dest)
 
     def king_move(self, src, dest):
+        piece = self.board[src[0]][src[1]]
         row_diff = abs(src[0] - dest[0])
         col_diff = abs(src[1] - dest[1])
-        return row_diff <= 1 and col_diff <= 1
+
+        if piece[0] == 'w' and piece[1] == 'K' and self.ck[4][7] == 0:
+            if dest == [1, 7] and self.ck[0][7] == 0:
+                if self.board[1][7] == '' and self.board[2][7] == '' and self.board[3][7] == '':
+                    self.board[4][7] = ''
+                    self.board[1][7] = 'wK'
+
+                    self.board[0][7] = ''
+                    self.board[2][7] = 'wR'
+
+            if dest == [6, 7] and self.ck[7][7] == 0:
+                if self.board[5][7] == '' and self.board[6][7] == '':
+                    self.board[6][7] = 'wK'
+                    self.board[4][7] = ''
+
+                    self.board[7][7] = ''
+                    self.board[5][7] = 'wR'
+
+        if piece[0] == 'b' and piece[1] == 'K' and self.ck[4][0] == 0:
+            if dest == [1, 0] and self.ck[0][0] == 0:
+                if self.board[1][0] == '' and self.board[2][0] == '' and self.board[3][0] == '':
+                    self.board[1][0] = 'bK'
+                    self.board[4][0] = ''
+
+                    self.board[0][0] = ''
+                    self.board[2][0] = 'bR'
+            if dest == [6, 0] and self.ck[7][0] == 0:
+                if self.board[5][0] == '' and self.board[6][0] == '':
+                    self.board[6][0] = 'bK'
+                    self.board[4][0] = ''
+
+                    self.board[7][0] = ''
+                    self.board[5][0] = 'bR'
+
+        if row_diff <= 1 and col_diff <= 1:
+            self.ck[src[0]][src[1]] = 1
+            return True
+
+        return False
+
     def pawn_move(self, src, dest):
         piece = self.board[src[0]][src[1]]
         temp = abs(src[0] - dest[0])
@@ -146,7 +191,7 @@ class Game():
                 return (src[0]+1 == dest[0] and (src[1]+1 == dest[1] or src[1]-1 == dest[1]))
         else:
             if self.board[dest[0]][dest[1]] != '' and self.board[dest[0]][dest[1]][0] != self.board[src[0]][src[1]][0]:
-                return (src[0] -1  == dest[0] and (src[1] + 1 == dest[1] or src[1] - 1 == dest[1]))
+                return (src[0]-1 == dest[0] and (src[1]+1 == dest[1] or src[1]-1 == dest[1]))
     def prompt_for_promotion_piece(self):
         window = tk.Tk()
         window.title("Pawn Promotion")
@@ -192,3 +237,4 @@ class Game():
                     if temp[0].size > 0 and not self.restrict((x,y), (temp[0][0], temp[1][0])):
                         return True
         return False
+
