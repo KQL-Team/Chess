@@ -17,12 +17,16 @@ class Game():
             ['wR', 'wH', 'wB', 'wQ', 'wK', 'wB', 'wH', 'wR']
         ])
         self.ck = np.zeros((10, 10), dtype=int)
-
+        self.white_check = False
+        self.black_check = False
     def move(self, src, dest):
         if self.restrict(src, dest):
             return
         if self.move_leads_to_check(src, dest):
             return
+        if self.castling(src, dest):
+            return
+        self.ck[src[0]][src[1]] = 1
         if not self.remove_piece(src, dest):
             temp = self.board[src[0]][src[1]]
             self.board[src[0]][src[1]] = self.board[dest[0]][dest[1]]
@@ -89,7 +93,6 @@ class Game():
             for row in range(src[0] + step, dest[0], step):
                 if self.board[row][src[1]] != '':
                     return False
-        self.ck[src[0]][src[1]] = 1;
         return True
 
     def b_move(self, src, dest):
@@ -109,42 +112,24 @@ class Game():
         piece = self.board[src[0]][src[1]]
         row_diff = abs(src[0] - dest[0])
         col_diff = abs(src[1] - dest[1])
+        if piece[0] == 'w' and piece[1] == 'K' and self.ck[7][4] == 0 and not self.white_check:
+            if dest == (7,1) and self.ck[7][0] == 0:
+                if self.board[7][1] == '' and self.board[7][2] == '' and self.board[7][3] == '':
+                    return True
+            if dest == (7,6) and self.ck[7][7] == 0:
+                if self.board[7][5] == '' and self.board[7][6] == '':
+                    return True
 
-        if piece[0] == 'w' and piece[1] == 'K' and self.ck[4][7] == 0:
-            if dest == [1, 7] and self.ck[0][7] == 0:
-                if self.board[1][7] == '' and self.board[2][7] == '' and self.board[3][7] == '':
-                    self.board[4][7] = ''
-                    self.board[1][7] = 'wK'
+        if piece[0] == 'b' and piece[1] == 'K' and self.ck[0][4] == 0 and not self.black_check:
+            if dest == (0,1) and self.ck[0][0] == 0:
+                if self.board[0][1] == '' and self.board[0][2] == '' and self.board[0][3] == '':
 
-                    self.board[0][7] = ''
-                    self.board[2][7] = 'wR'
-
-            if dest == [6, 7] and self.ck[7][7] == 0:
-                if self.board[5][7] == '' and self.board[6][7] == '':
-                    self.board[6][7] = 'wK'
-                    self.board[4][7] = ''
-
-                    self.board[7][7] = ''
-                    self.board[5][7] = 'wR'
-
-        if piece[0] == 'b' and piece[1] == 'K' and self.ck[4][0] == 0:
-            if dest == [1, 0] and self.ck[0][0] == 0:
-                if self.board[1][0] == '' and self.board[2][0] == '' and self.board[3][0] == '':
-                    self.board[1][0] = 'bK'
-                    self.board[4][0] = ''
-
-                    self.board[0][0] = ''
-                    self.board[2][0] = 'bR'
-            if dest == [6, 0] and self.ck[7][0] == 0:
-                if self.board[5][0] == '' and self.board[6][0] == '':
-                    self.board[6][0] = 'bK'
-                    self.board[4][0] = ''
-
-                    self.board[7][0] = ''
-                    self.board[5][0] = 'bR'
+                    return True
+            if dest == (0,6) and self.ck[0][7] == 0:
+                if self.board[0][5] == '' and self.board[0][6] == '':
+                    return True
 
         if row_diff <= 1 and col_diff <= 1:
-            self.ck[src[0]][src[1]] = 1
             return True
 
         return False
@@ -226,7 +211,9 @@ class Game():
                 if self.board[x][y] != '' and self.board[x][y][0] == 'b':
                     temp = np.where(self.board == 'wK')
                     if temp[0].size > 0 and not self.restrict((x,y), (temp[0][0], temp[1][0])):
+                        self.white_check = True
                         return True
+        self.white_check = False
         return False
     def check_black(self):
         for x in range(8):
@@ -234,6 +221,45 @@ class Game():
                 if self.board[x][y] != '' and self.board[x][y][0] == 'w':
                     temp = np.where(self.board == 'bK')
                     if temp[0].size > 0 and not self.restrict((x,y), (temp[0][0], temp[1][0])):
+                        self.black_check = True
                         return True
+        self.black_check = False
         return False
 
+    def castling(self, src, dest):
+        piece = self.board[src[0]][src[1]]
+        if piece[0] == 'w' and piece[1] == 'K':
+            if dest == (7, 1):
+                self.board[7][4] = ''
+                self.board[7][1] = 'wK'
+
+                self.board[7][0] = ''
+                self.board[7][2] = 'wR'
+                self.ck[7][4] = 1
+                return True
+            elif dest == (7, 6):
+                self.board[7][6] = 'wK'
+                self.board[7][4] = ''
+
+                self.board[7][7] = ''
+                self.board[7][5] = 'wR'
+                self.ck[7][4] = 1
+                return True
+        if piece[0] == 'b' and piece[1] == 'K':
+            if dest == (0,1):
+                self.board[0][1] = 'bK'
+                self.board[0][4] = ''
+
+                self.board[0][0] = ''
+                self.board[2][0] = 'bR'
+                self.ck[0][4] = 1
+                return True
+            elif dest == (0,6):
+                self.board[0][6] = 'bK'
+                self.board[0][4] = ''
+
+                self.board[0][7] = ''
+                self.board[0][5] = 'bR'
+                self.ck[0][4] = 1
+                return True
+        return False
