@@ -21,7 +21,8 @@ class Game():
     def move(self, src, dest):
         if self.restrict(src, dest):
             return
-
+        if self.move_leads_to_check(src, dest):
+            return
         if not self.remove_piece(src, dest):
             temp = self.board[src[0]][src[1]]
             self.board[src[0]][src[1]] = self.board[dest[0]][dest[1]]
@@ -40,11 +41,11 @@ class Game():
             temp_game = Game()
             temp_game.board = temp_board
             return temp_game.check_white()
-        else:
+        elif self.board[src[0]][src[1]][0] == 'b':
             temp_game = Game()
             temp_game.board = temp_board
             return temp_game.check_black()
-
+        return False
     def restrict(self, src, dest):
         first_char = self.board[src[0]][src[1]][1]
         if self.board[src[0]][src[1]] != '' and self.board[dest[0]][dest[1]] != '':
@@ -61,8 +62,6 @@ class Game():
         elif first_char == 'K' and not self.king_move(src, dest):
             return True
         elif first_char == 'P' and not self.pawn_move(src, dest):
-            return True
-        if self.move_leads_to_check(src, dest):
             return True
         return False
 

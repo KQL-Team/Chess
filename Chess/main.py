@@ -80,7 +80,7 @@ def draw_temp_board(screen, game, player_move):
         for x in range(8):
             color = colors[(x + y) % 2]
             p.draw.rect(screen, color, p.Rect(x * p_size, y * p_size, p_size, p_size))
-            if not game.restrict(player_move[0], (y, x)):
+            if not game.restrict(player_move[0], (y, x)) and not game.move_leads_to_check(player_move[0], (y, x)):
                 pygame.gfxdraw.aacircle(screen, int((x+0.5) * p_size), int((y+0.5) * p_size), p_size//10, colors[2])
                 pygame.gfxdraw.filled_circle(screen, int((x+0.5) * p_size), int((y+0.5)* p_size), p_size//10, colors[2])
                 if game.remove_piece(player_move[0], (y, x)):
@@ -120,7 +120,7 @@ def check_mouse(p, game):
         check_turn(white_turn, player_move, game.board)
 
     if len(player_move) == 2:
-        if not game.restrict(player_move[0], player_move[1]):
+        if not game.restrict(player_move[0], player_move[1]) and not game.move_leads_to_check(player_move[0], player_move[1]):
             white_turn = not white_turn
             game.move(player_move[0], player_move[1])
         player_move.clear()
