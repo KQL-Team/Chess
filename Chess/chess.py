@@ -228,8 +228,8 @@ class Game():
 
     def castling(self, src, dest):
         piece = self.board[src[0]][src[1]]
-        if piece[0] == 'w' and piece[1] == 'K':
-            if dest == (7, 1):
+        if piece[0] == 'w' and piece[1] == 'K' and src == (7,4):
+            if dest == (7, 1) :
                 self.board[7][4] = ''
                 self.board[7][1] = 'wK'
 
@@ -245,13 +245,13 @@ class Game():
                 self.board[7][5] = 'wR'
                 self.ck[7][4] = 1
                 return True
-        if piece[0] == 'b' and piece[1] == 'K':
+        if piece[0] == 'b' and piece[1] == 'K' and src == (0,4):
             if dest == (0,1):
                 self.board[0][1] = 'bK'
                 self.board[0][4] = ''
 
                 self.board[0][0] = ''
-                self.board[2][0] = 'bR'
+                self.board[0][2] = 'bR'
                 self.ck[0][4] = 1
                 return True
             elif dest == (0,6):
