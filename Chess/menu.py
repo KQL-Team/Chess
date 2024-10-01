@@ -73,11 +73,9 @@ def draw_menu():
                 if i == 0:
                     game_state = 1
                 elif i == 1:
-                    p.quit()
-                    # Thêm mã để gọi file chế độ AIEasy
+                    game_state = 2
                 elif i == 2:
-                    p.quit()
-                    # Thêm mã để gọi file chế độ AIHard
+                    game_state = 3
     return game_state
 
 def random_pieces():

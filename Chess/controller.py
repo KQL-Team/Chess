@@ -6,6 +6,6 @@ game_run = cg.game_run
 while game_run:
     if game_state == 0:
         game_run, game_state = menu.run()
-    if game_state == 1:
+    else:
         game_run = main.main()
 
