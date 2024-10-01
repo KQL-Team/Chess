@@ -30,8 +30,8 @@ def load_images():
         img = Image.open("Images/" + piece + ".png")
         img = img.resize((p_size, p_size), Image.LANCZOS)
         chess_img[piece] = p.image.fromstring(img.tobytes(), img.size, img.mode).convert_alpha()
-
 load_images()
+
 
 def main():
     global game_run
@@ -45,6 +45,7 @@ def main():
     clock.tick(FPS)
     p.display.flip()
     return game_run
+
 
 def draw_game(screen, game, player_move):
     if len(player_move) == 1:
@@ -74,6 +75,7 @@ def draw_pieces(screen, board):
             if piece != '':
                 screen.blit(chess_img[piece], p.Rect(x * p_size, y * p_size, p_size, p_size))
 
+
 def draw_temp_board(screen, game, player_move):
     colors = [p.Color(235, 236, 208), p.Color("#9A784F"), p.Color('#795C34'), p.Color('#F5F682')]
     for y in range(8):
@@ -86,6 +88,7 @@ def draw_temp_board(screen, game, player_move):
                 if game.remove_piece(player_move[0], (y, x)):
                     p.draw.rect(screen, colors[3], p.Rect(x * p_size, y * p_size, p_size, p_size))
 
+
 def check_turn(color_turn, player_move, board):
     if (color_turn):
         cur = player_move[0]
@@ -95,16 +98,22 @@ def check_turn(color_turn, player_move, board):
         cur = player_move[0]
         if board[cur[0]][cur[1]] == '' or board[cur[0]][cur[1]][0] == 'w':
             player_move.clear()
+
+
 def white_king(game):
     temp = np.where(game.board == 'wK')
     x = temp[0][0]
     y = temp[1][0]
     p.draw.rect(screen, p.Color('red'), p.Rect(y * p_size, x * p_size, p_size, p_size))
+
+
 def black_king(game):
     temp = np.where(game.board == 'bK')
     x = temp[0][0]
     y = temp[1][0]
     p.draw.rect(screen, p.Color('red'), p.Rect(y * p_size, x * p_size, p_size, p_size))
+
+
 def check_mouse(p, game):
     global square_select
     global white_turn
