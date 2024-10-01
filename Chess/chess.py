@@ -288,4 +288,13 @@ class Game():
                                 if not self.restrict((x, y), (col, row)) and not self.move_leads_to_check((x, y), (col, row)):
                                     return False, "check"
             return True, "win"
+        if not (self.check_white() or self.check_black()):
+            for x in range(8):
+                for y in range(8):
+                    if self.board[x][y] != '' and self.board[x][y][0] == "b":
+                        for col in range(8):
+                            for row in range(8):
+                                if not self.restrict((x, y), (col, row)) and not self.move_leads_to_check((x, y), (col, row)):
+                                    return False, "cont"
+            return True, "draw"
         return False, "cont"

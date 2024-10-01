@@ -8,6 +8,7 @@ import chess
 import pygame.gfxdraw
 import numpy as np
 chess_img = {}
+end_game_image = []
 game_run = cg.game_run
 game_state = cg.GAME_STATE
 choice = cg.choice
@@ -32,6 +33,13 @@ def load_images():
         img = Image.open("Images/" + piece + ".png")
         img = img.resize((p_size, p_size), Image.LANCZOS)
         chess_img[piece] = p.image.fromstring(img.tobytes(), img.size, img.mode).convert_alpha()
+    imggs = ['white_won', 'black_won', 'draw']
+    for i in range(3):
+        img = Image.open("Images/"+ imggs[i] + ".png")
+        img = img.resize((p_size*7, p_size*2))
+        end_game_image.append(p.image.fromstring(img.tobytes(), img.size, img.mode).convert_alpha())
+
+
 load_images()
 
 
@@ -46,9 +54,12 @@ def main():
     draw_game(screen, game, player_move)
     if game.end_game() != temp:
         print(game.end_game())
-    if True in game.end_game():
-        p.quit()
-        sys.exit()
+    if game.end_game() == (True, "win"):
+        screen.blit(end_game_image[0], p.Rect(0.5 * p_size, 3 * p_size, p_size, p_size))
+        cg.game_run = False
+    if game.end_game() == (True, "lose"):
+        screen.blit(end_game_image[1], p.Rect(0.5 * p_size, 3 * p_size, p_size, p_size))
+
     temp = game.end_game()
     clock.tick(FPS)
     p.display.flip()
