@@ -263,3 +263,23 @@ class Game():
                 self.ck[0][4] = 1
                 return True
         return False
+        
+        
+def end_game(self):
+    if check_white:
+        for x in range(8):
+            for y in range(8):
+                if self.board[x][y][0] == "w":
+                    for col in range(8):
+                        for row in range(8):
+                            if not self.restrict((x,y),(col,row)) and not self.move_leads_to_check:
+                                return False
+    if check_black:
+        for x in range(8):
+            for y in range(8):
+                if self.board[x][y][0] == "b":
+                    for col in range(8):
+                        for row in range(8):
+                            if not self.restrict((x,y),(col,row)) and not self.move_leads_to_check:
+                                return False                            
+    return True
