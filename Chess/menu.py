@@ -6,7 +6,6 @@ import random
 import math
 import config as cg
 import warnings
-
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 p.init()
@@ -24,6 +23,7 @@ black = p.color.THECOLORS["black"]
 white = p.color.THECOLORS["seashell1"]
 gray = p.color.THECOLORS["grey44"]
 
+game_state = cg.GAME_STATE
 game_run = cg.game_run
 choice = cg.choice
 width = cg.width
@@ -33,7 +33,8 @@ p_size = width // dim
 FPS = cg.p_size
 screen = cg.screen
 image = p.transform.smoothscale(p.image.load("Images/background.png"), (720, 720))
-def draw_menu(choice, menu_run):
+def draw_menu():
+    global game_state
     screen.blit(image, (0, 0))
 
     title_text = font.render("Chess Game", True, white)
@@ -70,16 +71,14 @@ def draw_menu(choice, menu_run):
         if button["rect"].collidepoint(mouse):
             if mouse_click[0]:
                 if i == 0:
-                    choice = 1
-                    menu_run = True
+                    game_state = 1
                 elif i == 1:
                     p.quit()
                     # Thêm mã để gọi file chế độ AIEasy
                 elif i == 2:
                     p.quit()
                     # Thêm mã để gọi file chế độ AIHard
-    return choice, menu_run
-
+    return game_state
 
 def random_pieces():
     pieces = [AnKing, AnQueen, AnPawn, AnKnight]
@@ -98,18 +97,16 @@ falling_piece2 = random_pieces()
 
 count = 0
 
-def run(game_run):
+def run():
     speed = 1.5
-    global count
-    global falling_piece
-    global falling_piece2
+    global count, falling_piece, falling_piece2, game_state, game_run
     falling_piece[1][1] += speed
     clock.tick(FPS)
     for event in p.event.get():
         if event.type == p.QUIT:
-            game_run = True
+            game_run = False
     screen.fill(p.color.THECOLORS["chartreuse4"])
-    choice, game_run = draw_menu(0, game_run)
+    game_state = draw_menu()
     screen.blit(falling_piece[0], falling_piece[1])
 
     if falling_piece[1][1] > height/2:
@@ -123,4 +120,4 @@ def run(game_run):
         falling_piece2 = random_pieces()
 
     p.display.flip()
-    return game_run, choice
+    return game_run, game_state

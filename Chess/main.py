@@ -6,8 +6,8 @@ import chess
 import pygame.gfxdraw
 import numpy as np
 chess_img = {}
-
 game_run = cg.game_run
+game_state = cg.GAME_STATE
 choice = cg.choice
 width = cg.width 
 height = cg.height
@@ -33,8 +33,8 @@ def load_images():
 
 load_images()
 
-def main(game_run):
-
+def main():
+    global game_run
     screen.fill(p.Color('white'))
     for event in p.event.get():
         if event.type == p.QUIT:

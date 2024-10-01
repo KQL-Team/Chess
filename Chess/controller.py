@@ -1,10 +1,11 @@
-import pygame as p
 import main
 import menu
-game_run = False
-choice = 0
-while not game_run:
-    game_run, choice = menu.run(game_run)
-while choice and game_run:
-    game_run = main.main(game_run)
+import config as cg
+game_state = cg.GAME_STATE
+game_run = cg.game_run
+while game_run:
+    if game_state == 0:
+        game_run, game_state = menu.run()
+    if game_state == 1:
+        game_run = main.main()
 
