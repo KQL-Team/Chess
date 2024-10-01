@@ -19,6 +19,7 @@ class Game():
         self.ck = np.zeros((10, 10), dtype=int)
         self.white_check = False
         self.black_check = False
+
     def move(self, src, dest):
         if self.restrict(src, dest):
             return
@@ -50,6 +51,7 @@ class Game():
             temp_game.board = temp_board
             return temp_game.check_black()
         return False
+
     def restrict(self, src, dest):
         first_char = self.board[src[0]][src[1]][1]
         if self.board[src[0]][src[1]] != '' and self.board[dest[0]][dest[1]] != '':
@@ -113,19 +115,18 @@ class Game():
         row_diff = abs(src[0] - dest[0])
         col_diff = abs(src[1] - dest[1])
         if piece[0] == 'w' and piece[1] == 'K' and self.ck[7][4] == 0 and not self.white_check:
-            if dest == (7,1) and self.ck[7][0] == 0:
+            if dest == (7, 1) and self.ck[7][0] == 0:
                 if self.board[7][1] == '' and self.board[7][2] == '' and self.board[7][3] == '':
                     return True
-            if dest == (7,6) and self.ck[7][7] == 0:
+            if dest == (7, 6) and self.ck[7][7] == 0:
                 if self.board[7][5] == '' and self.board[7][6] == '':
                     return True
 
         if piece[0] == 'b' and piece[1] == 'K' and self.ck[0][4] == 0 and not self.black_check:
-            if dest == (0,1) and self.ck[0][0] == 0:
+            if dest == (0, 1) and self.ck[0][0] == 0:
                 if self.board[0][1] == '' and self.board[0][2] == '' and self.board[0][3] == '':
-
                     return True
-            if dest == (0,6) and self.ck[0][7] == 0:
+            if dest == (0, 6) and self.ck[0][7] == 0:
                 if self.board[0][5] == '' and self.board[0][6] == '':
                     return True
 
@@ -138,12 +139,12 @@ class Game():
         piece = self.board[src[0]][src[1]]
         temp = abs(src[0] - dest[0])
         if piece[0] == 'b':
-            if not self.pawn_remove(src, dest) :
+            if not self.pawn_remove(src, dest):
                 if self.board[dest[0]][dest[1]] == '':
                     if src[0] == 1:
                         if dest[0] <= src[0] + 2 and dest[1] == src[1] and dest[0] >= src[0]:
                             for i in range(1, temp):
-                                if self.board[src[0]+i][src[1]] != '':
+                                if self.board[src[0] + i][src[1]] != '':
                                     return False
                             return True
                     else:
@@ -153,7 +154,7 @@ class Game():
                 if abs(dest[1] - src[1]) <= 1:
                     return True
         else:
-            if not self.pawn_remove(src, dest) :
+            if not self.pawn_remove(src, dest):
                 if self.board[dest[0]][dest[1]] == '':
                     if src[0] == 6:
                         if dest[0] >= src[0] - 2 and dest[1] == src[1] and dest[0] <= src[0]:
@@ -165,17 +166,19 @@ class Game():
                         if dest[0] >= src[0] - 1 and dest[1] == src[1] and dest[0] <= src[0]:
                             return True
             else:
-                if abs(dest[1]- src[1])<=1:
+                if abs(dest[1] - src[1]) <= 1:
                     return True
         return False
+
     def pawn_remove(self, src, dest):
         piece = self.board[src[0]][src[1]]
         if piece[0] == 'b':
             if self.board[dest[0]][dest[1]] != '' and self.board[dest[0]][dest[1]][0] != self.board[src[0]][src[1]][0]:
-                return (src[0]+1 == dest[0] and (src[1]+1 == dest[1] or src[1]-1 == dest[1]))
+                return (src[0] + 1 == dest[0] and (src[1] + 1 == dest[1] or src[1] - 1 == dest[1]))
         else:
             if self.board[dest[0]][dest[1]] != '' and self.board[dest[0]][dest[1]][0] != self.board[src[0]][src[1]][0]:
-                return (src[0]-1 == dest[0] and (src[1]+1 == dest[1] or src[1]-1 == dest[1]))
+                return (src[0] - 1 == dest[0] and (src[1] + 1 == dest[1] or src[1] - 1 == dest[1]))
+
     def prompt_for_promotion_piece(self):
         window = tk.Tk()
         window.title("Pawn Promotion")
@@ -205,22 +208,24 @@ class Game():
             if dest[0] == 0:
                 promotion_piece = self.prompt_for_promotion_piece()
                 self.board[dest[0]][dest[1]] = 'w' + promotion_piece
+
     def check_white(self):
         for x in range(8):
             for y in range(8):
                 if self.board[x][y] != '' and self.board[x][y][0] == 'b':
                     temp = np.where(self.board == 'wK')
-                    if temp[0].size > 0 and not self.restrict((x,y), (temp[0][0], temp[1][0])):
+                    if temp[0].size > 0 and not self.restrict((x, y), (temp[0][0], temp[1][0])):
                         self.white_check = True
                         return True
         self.white_check = False
         return False
+
     def check_black(self):
         for x in range(8):
             for y in range(8):
                 if self.board[x][y] != '' and self.board[x][y][0] == 'w':
                     temp = np.where(self.board == 'bK')
-                    if temp[0].size > 0 and not self.restrict((x,y), (temp[0][0], temp[1][0])):
+                    if temp[0].size > 0 and not self.restrict((x, y), (temp[0][0], temp[1][0])):
                         self.black_check = True
                         return True
         self.black_check = False
@@ -228,8 +233,8 @@ class Game():
 
     def castling(self, src, dest):
         piece = self.board[src[0]][src[1]]
-        if piece[0] == 'w' and piece[1] == 'K' and src == (7,4):
-            if dest == (7, 1) :
+        if piece[0] == 'w' and piece[1] == 'K' and src == (7, 4):
+            if dest == (7, 1):
                 self.board[7][4] = ''
                 self.board[7][1] = 'wK'
 
@@ -245,8 +250,8 @@ class Game():
                 self.board[7][5] = 'wR'
                 self.ck[7][4] = 1
                 return True
-        if piece[0] == 'b' and piece[1] == 'K' and src == (0,4):
-            if dest == (0,1):
+        if piece[0] == 'b' and piece[1] == 'K' and src == (0, 4):
+            if dest == (0, 1):
                 self.board[0][1] = 'bK'
                 self.board[0][4] = ''
 
@@ -254,7 +259,7 @@ class Game():
                 self.board[0][2] = 'bR'
                 self.ck[0][4] = 1
                 return True
-            elif dest == (0,6):
+            elif dest == (0, 6):
                 self.board[0][6] = 'bK'
                 self.board[0][4] = ''
 
@@ -263,23 +268,24 @@ class Game():
                 self.ck[0][4] = 1
                 return True
         return False
-        
-        
-def end_game(self):
-    if self.check_white():
-        for x in range(8):
-            for y in range(8):
-                if self.board[x][y][0] == "w":
-                    for col in range(8):
-                        for row in range(8):
-                            if not self.restrict((x,y),(col,row)) and not self.move_leads_to_check:
-                                return False
-    if self.check_black():
-        for x in range(8):
-            for y in range(8):
-                if self.board[x][y][0] == "b":
-                    for col in range(8):
-                        for row in range(8):
-                            if not self.restrict((x,y),(col,row)) and not self.move_leads_to_check:
-                                return False                            
-    return True
+
+    def end_game(self):
+        if self.check_white():
+            for x in range(8):
+                for y in range(8):
+                    if self.board[x][y] != '' and self.board[x][y][0] == "w":
+                        for col in range(8):
+                            for row in range(8):
+                                if not self.restrict((x, y), (col, row)) and not self.move_leads_to_check((x, y), (col, row)):
+                                    return False, 0
+            return True, "lose"
+        if self.check_black():
+            for x in range(8):
+                for y in range(8):
+                    if self.board[x][y] != '' and self.board[x][y][0] == "b":
+                        for col in range(8):
+                            for row in range(8):
+                                if not self.restrict((x, y), (col, row)) and not self.move_leads_to_check((x, y), (col, row)):
+                                    return False, "check"
+            return True, "win"
+        return False, "cont"

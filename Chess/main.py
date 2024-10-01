@@ -1,3 +1,5 @@
+import sys
+
 import pygame
 import pygame as p
 from PIL import Image
@@ -18,7 +20,7 @@ screen = cg.screen
 pygame.display.set_caption('Chess')
 
 p.init()
-
+temp = True, "win"
 clock = p.time.Clock()
 game = chess.Game()
 square_select = ()
@@ -34,7 +36,7 @@ load_images()
 
 
 def main():
-    global game_run
+    global game_run, temp
     screen.fill(p.Color('white'))
     for event in p.event.get():
         if event.type == p.QUIT:
@@ -42,6 +44,12 @@ def main():
         elif event.type == p.MOUSEBUTTONDOWN:
             white_turn = check_mouse(p, game)
     draw_game(screen, game, player_move)
+    if game.end_game() != temp:
+        print(game.end_game())
+    if True in game.end_game():
+        p.quit()
+        sys.exit()
+    temp = game.end_game()
     clock.tick(FPS)
     p.display.flip()
     return game_run
