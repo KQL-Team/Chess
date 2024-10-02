@@ -7,22 +7,22 @@ from prompt_toolkit.key_binding.bindings.named_commands import self_insert
 class Game():
     def __init__(self):
         self.board = np.array([
-            # ['bR', 'bH', 'bB', 'bQ', 'bK', 'bB', 'bH', 'bR'],
-            # ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
+            ['bR', 'bH', 'bB', 'bQ', 'bK', 'bB', 'bH', 'bR'],
+            ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
+            ['', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', ''],
+            ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
+            ['wR', 'wH', 'wB', 'wQ', 'wK', 'wB', 'wH', 'wR']
+            # ['', 'bK', '', '', '', '', '', ''],
+            # ['', '', '', '', 'bQ', '', '', ''],
             # ['', '', '', '', '', '', '', ''],
             # ['', '', '', '', '', '', '', ''],
             # ['', '', '', '', '', '', '', ''],
             # ['', '', '', '', '', '', '', ''],
-            # ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
-            # ['wR', 'wH', 'wB', 'wQ', 'wK', 'wB', 'wH', 'wR']
-            ['', 'bK', '', '', '', '', '', ''],
-            ['', '', '', '', 'bQ', '', '', ''],
-            ['', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', '', ''],
-            ['', 'wK', '', '', '', '', '', ''],
+            # ['', '', '', '', '', '', '', ''],
+            # ['', 'wK', '', '', '', '', '', ''],
         ])
         self.ck = np.zeros((10, 10), dtype=int)
         self.white_check = False
@@ -182,10 +182,10 @@ class Game():
         piece = self.board[src[0]][src[1]]
         if piece[0] == 'b':
             if self.board[dest[0]][dest[1]] != '' and self.board[dest[0]][dest[1]][0] != self.board[src[0]][src[1]][0]:
-                return (src[0] + 1 == dest[0] and (src[1] + 1 == dest[1] or src[1] - 1 == dest[1]))
+                return src[0] + 1 == dest[0] and (src[1] + 1 == dest[1] or src[1] - 1 == dest[1])
         else:
             if self.board[dest[0]][dest[1]] != '' and self.board[dest[0]][dest[1]][0] != self.board[src[0]][src[1]][0]:
-                return (src[0] - 1 == dest[0] and (src[1] + 1 == dest[1] or src[1] - 1 == dest[1]))
+                return src[0] - 1 == dest[0] and (src[1] + 1 == dest[1] or src[1] - 1 == dest[1])
 
     def prompt_for_promotion_piece(self):
         window = tk.Tk()
