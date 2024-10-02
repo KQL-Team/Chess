@@ -7,14 +7,22 @@ from prompt_toolkit.key_binding.bindings.named_commands import self_insert
 class Game():
     def __init__(self):
         self.board = np.array([
-            ['bR', 'bH', 'bB', 'bQ', 'bK', 'bB', 'bH', 'bR'],
-            ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
+            # ['bR', 'bH', 'bB', 'bQ', 'bK', 'bB', 'bH', 'bR'],
+            # ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
+            # ['', '', '', '', '', '', '', ''],
+            # ['', '', '', '', '', '', '', ''],
+            # ['', '', '', '', '', '', '', ''],
+            # ['', '', '', '', '', '', '', ''],
+            # ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
+            # ['wR', 'wH', 'wB', 'wQ', 'wK', 'wB', 'wH', 'wR']
+            ['', 'bK', '', '', '', '', '', ''],
+            ['', '', '', '', 'bQ', '', '', ''],
             ['', '', '', '', '', '', '', ''],
             ['', '', '', '', '', '', '', ''],
             ['', '', '', '', '', '', '', ''],
             ['', '', '', '', '', '', '', ''],
-            ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
-            ['wR', 'wH', 'wB', 'wQ', 'wK', 'wB', 'wH', 'wR']
+            ['', '', '', '', '', '', '', ''],
+            ['', 'wK', '', '', '', '', '', ''],
         ])
         self.ck = np.zeros((10, 10), dtype=int)
         self.white_check = False
@@ -115,18 +123,18 @@ class Game():
         row_diff = abs(src[0] - dest[0])
         col_diff = abs(src[1] - dest[1])
         if piece[0] == 'w' and piece[1] == 'K' and self.ck[7][4] == 0 and not self.white_check:
-            if dest == (7, 1) and self.ck[7][0] == 0:
+            if dest == (7, 1) and self.ck[7][0] == 0 and self.board[7][0] == 'wR':
                 if self.board[7][1] == '' and self.board[7][2] == '' and self.board[7][3] == '':
                     return True
-            if dest == (7, 6) and self.ck[7][7] == 0:
+            if dest == (7, 6) and self.ck[7][7] == 0 and self.board[7][7] == 'wR':
                 if self.board[7][5] == '' and self.board[7][6] == '':
                     return True
 
         if piece[0] == 'b' and piece[1] == 'K' and self.ck[0][4] == 0 and not self.black_check:
-            if dest == (0, 1) and self.ck[0][0] == 0:
+            if dest == (0, 1) and self.ck[0][0] == 0 and self.board[0][0] == 'bR':
                 if self.board[0][1] == '' and self.board[0][2] == '' and self.board[0][3] == '':
                     return True
-            if dest == (0, 6) and self.ck[0][7] == 0:
+            if dest == (0, 6) and self.ck[0][7] == 0 and self.board[0][7] == 'bR':
                 if self.board[0][5] == '' and self.board[0][6] == '':
                     return True
 
@@ -277,7 +285,7 @@ class Game():
                         for col in range(8):
                             for row in range(8):
                                 if not self.restrict((x, y), (col, row)) and not self.move_leads_to_check((x, y), (col, row)):
-                                    return False, 0
+                                    return False, "white_check"
             return True, "lose"
         if self.check_black():
             for x in range(8):
@@ -286,8 +294,10 @@ class Game():
                         for col in range(8):
                             for row in range(8):
                                 if not self.restrict((x, y), (col, row)) and not self.move_leads_to_check((x, y), (col, row)):
-                                    return False, "check"
+                                    return False, "black_check"
             return True, "win"
+        drawW = 0
+        drawB = 0
         if not (self.check_white() or self.check_black()):
             for x in range(8):
                 for y in range(8):
@@ -295,6 +305,14 @@ class Game():
                         for col in range(8):
                             for row in range(8):
                                 if not self.restrict((x, y), (col, row)) and not self.move_leads_to_check((x, y), (col, row)):
-                                    return False, "cont"
-            return True, "draw"
-        return False, "cont"
+                                    drawB =1
+                    if self.board[x][y] != '' and self.board[x][y][0] == "w":
+                        for col in range(8):
+                            for row in range(8):
+                                if not self.restrict((x, y), (col, row)) and not self.move_leads_to_check((x, y), (col, row)):
+                                    drawW =1
+            if drawB == 0 or drawW == 0:
+                return True, "draw"
+            else:
+                return False, "cont"
+        return False, "cont2"

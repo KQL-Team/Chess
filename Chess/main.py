@@ -59,7 +59,10 @@ def main():
         cg.game_run = False
     if game.end_game() == (True, "lose"):
         screen.blit(end_game_image[1], p.Rect(0.5 * p_size, 3 * p_size, p_size, p_size))
-
+        cg.game_run = False
+    if game.end_game() == (True, "draw"):
+        screen.blit(end_game_image[2], p.Rect(0.5 * p_size, 3 * p_size, p_size, p_size))
+        cg.game_run = False
     temp = game.end_game()
     clock.tick(FPS)
     p.display.flip()
