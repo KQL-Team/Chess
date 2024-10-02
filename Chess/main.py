@@ -21,7 +21,6 @@ screen = cg.screen
 pygame.display.set_caption('Chess')
 
 p.init()
-temp = True, "win"
 clock = p.time.Clock()
 game = chess.Game()
 square_select = ()
@@ -52,18 +51,7 @@ def main():
         elif event.type == p.MOUSEBUTTONDOWN:
             white_turn = check_mouse(p, game)
     draw_game(screen, game, player_move)
-    if game.end_game() != temp:
-        print(game.end_game())
-    if game.end_game() == (True, "win"):
-        screen.blit(end_game_image[0], p.Rect(0.5 * p_size, 3 * p_size, p_size, p_size))
-        cg.game_run = False
-    if game.end_game() == (True, "lose"):
-        screen.blit(end_game_image[1], p.Rect(0.5 * p_size, 3 * p_size, p_size, p_size))
-        cg.game_run = False
-    if game.end_game() == (True, "draw"):
-        screen.blit(end_game_image[2], p.Rect(0.5 * p_size, 3 * p_size, p_size, p_size))
-        cg.game_run = False
-    temp = game.end_game()
+    game_over(screen)
     clock.tick(FPS)
     p.display.flip()
     return game_run
@@ -157,3 +145,14 @@ def check_mouse(p, game):
         player_move.clear()
         square_select = ()
     return white_turn
+def game_over(screen):
+    global game_run
+    if game.end_game() == (True, "win"):
+        screen.blit(end_game_image[0], p.Rect(0.5 * p_size, 3 * p_size, p_size, p_size))
+        game_run = False
+    if game.end_game() == (True, "lose"):
+        screen.blit(end_game_image[1], p.Rect(0.5 * p_size, 3 * p_size, p_size, p_size))
+        game_run = False
+    if game.end_game() == (True, "draw"):
+        screen.blit(end_game_image[2], p.Rect(0.5 * p_size, 3 * p_size, p_size, p_size))
+        game_run = False
