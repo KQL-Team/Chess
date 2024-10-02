@@ -119,3 +119,6 @@ def run():
 
     p.display.flip()
     return game_run, game_state
+def reset():
+    global game_state
+    game_state = 0

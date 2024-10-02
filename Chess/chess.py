@@ -15,14 +15,6 @@ class Game():
             ['', '', '', '', '', '', '', ''],
             ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
             ['wR', 'wH', 'wB', 'wQ', 'wK', 'wB', 'wH', 'wR']
-            # ['', 'bK', '', '', '', '', '', ''],
-            # ['', '', '', '', 'bQ', '', '', ''],
-            # ['', '', '', '', '', '', '', ''],
-            # ['', '', '', '', '', '', '', ''],
-            # ['', '', '', '', '', '', '', ''],
-            # ['', '', '', '', '', '', '', ''],
-            # ['', '', '', '', '', '', '', ''],
-            # ['', 'wK', '', '', '', '', '', ''],
         ])
         self.ck = np.zeros((10, 10), dtype=int)
         self.white_check = False
@@ -123,18 +115,18 @@ class Game():
         row_diff = abs(src[0] - dest[0])
         col_diff = abs(src[1] - dest[1])
         if piece[0] == 'w' and piece[1] == 'K' and self.ck[7][4] == 0 and not self.white_check:
-            if dest == (7, 1) and self.ck[7][0] == 0 and self.board[7][0] == 'wR':
+            if dest == (7, 1) and self.ck[7][0] == 0:
                 if self.board[7][1] == '' and self.board[7][2] == '' and self.board[7][3] == '':
                     return True
-            if dest == (7, 6) and self.ck[7][7] == 0 and self.board[7][7] == 'wR':
+            if dest == (7, 6) and self.ck[7][7] == 0:
                 if self.board[7][5] == '' and self.board[7][6] == '':
                     return True
 
         if piece[0] == 'b' and piece[1] == 'K' and self.ck[0][4] == 0 and not self.black_check:
-            if dest == (0, 1) and self.ck[0][0] == 0 and self.board[0][0] == 'bR':
+            if dest == (0, 1) and self.ck[0][0] == 0:
                 if self.board[0][1] == '' and self.board[0][2] == '' and self.board[0][3] == '':
                     return True
-            if dest == (0, 6) and self.ck[0][7] == 0 and self.board[0][7] == 'bR':
+            if dest == (0, 6) and self.ck[0][7] == 0:
                 if self.board[0][5] == '' and self.board[0][6] == '':
                     return True
 

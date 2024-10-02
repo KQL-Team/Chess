@@ -10,7 +10,7 @@ import numpy as np
 chess_img = {}
 end_game_image = []
 game_run = cg.game_run
-game_state = cg.GAME_STATE
+game_state = 1
 choice = cg.choice
 width = cg.width 
 height = cg.height
@@ -43,7 +43,7 @@ load_images()
 
 
 def main():
-    global game_run, temp
+    global game_run, temp, game_state
     screen.fill(p.Color('white'))
     for event in p.event.get():
         if event.type == p.QUIT:
@@ -54,7 +54,7 @@ def main():
     game_over(screen)
     clock.tick(FPS)
     p.display.flip()
-    return game_run
+    return game_run, game_state
 
 
 def draw_game(screen, game, player_move):
@@ -146,13 +146,29 @@ def check_mouse(p, game):
         square_select = ()
     return white_turn
 def game_over(screen):
-    global game_run
+    global game_run, game_state
     if game.end_game() == (True, "win"):
         screen.blit(end_game_image[0], p.Rect(0.5 * p_size, 3 * p_size, p_size, p_size))
-        game_run = False
     if game.end_game() == (True, "lose"):
         screen.blit(end_game_image[1], p.Rect(0.5 * p_size, 3 * p_size, p_size, p_size))
-        game_run = False
     if game.end_game() == (True, "draw"):
         screen.blit(end_game_image[2], p.Rect(0.5 * p_size, 3 * p_size, p_size, p_size))
-        game_run = False
+    if True in game.end_game():
+        reset_board()
+        game_state = 0
+def reset_board():
+    global game
+    game.board = np.array([
+            ['bR', 'bH', 'bB', 'bQ', 'bK', 'bB', 'bH', 'bR'],
+            ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
+            ['', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', ''],
+            ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
+            ['wR', 'wH', 'wB', 'wQ', 'wK', 'wB', 'wH', 'wR']
+        ])
+def reset():
+    global game_state, white_turn
+    game_state = 1
+    white_turn = True
