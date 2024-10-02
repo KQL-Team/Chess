@@ -147,13 +147,14 @@ def check_mouse(p, game):
     return white_turn
 def game_over(screen):
     global game_run, game_state
-    if game.end_game() == (True, "win"):
-        screen.blit(end_game_image[0], p.Rect(0.5 * p_size, 3 * p_size, p_size, p_size))
-    if game.end_game() == (True, "lose"):
-        screen.blit(end_game_image[1], p.Rect(0.5 * p_size, 3 * p_size, p_size, p_size))
-    if game.end_game() == (True, "draw"):
-        screen.blit(end_game_image[2], p.Rect(0.5 * p_size, 3 * p_size, p_size, p_size))
+    # if game.end_game() == (True, "win"):
+    #     screen.blit(end_game_image[0], p.Rect(0.5 * p_size, 3 * p_size, p_size, p_size))
+    # if game.end_game() == (True, "lose"):
+    #     screen.blit(end_game_image[1], p.Rect(0.5 * p_size, 3 * p_size, p_size, p_size))
+    # if game.end_game() == (True, "draw"):
+    #     screen.blit(end_game_image[2], p.Rect(0.5 * p_size, 3 * p_size, p_size, p_size))
     if True in game.end_game():
+        # vẽ xong cửa sổ thì cho vô đây (2 cái resetboard với game_state cho vô một button khi bấm thì sẽ thực hiện)
         reset_board()
         game_state = 0
 def reset_board():
