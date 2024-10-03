@@ -7,6 +7,8 @@ import config as cg
 import chess
 import pygame.gfxdraw
 import numpy as np
+from modes.AIEasy import AIEasy
+
 chess_img = {}
 end_game_image = []
 game_run = cg.game_run
@@ -17,7 +19,8 @@ height = cg.height
 dim = cg.dim
 p_size = width // dim
 FPS = cg.p_size
-screen = cg.screen 
+screen = cg.screen
+#ai = AIEasy(game)
 pygame.display.set_caption('Chess')
 
 p.init()
@@ -43,15 +46,17 @@ load_images()
 
 
 def main():
-    global game_run, temp, game_state
+    global game_run, white_turn, game_state
     screen.fill(p.Color('white'))
     for event in p.event.get():
         if event.type == p.QUIT:
             game_run = False
-        elif event.type == p.MOUSEBUTTONDOWN:
+        elif event.type == p.MOUSEBUTTONDOWN and game_state == 1:
             white_turn = check_mouse(p, game)
+
     draw_game(screen, game, player_move)
     game_over(screen)
+
     clock.tick(FPS)
     p.display.flip()
     return game_run, game_state
@@ -125,11 +130,11 @@ def black_king(game):
 
 
 def check_mouse(p, game):
-    global square_select
-    global white_turn
+    global square_select, white_turn
     pos = p.mouse.get_pos()
     x = pos[1] // p_size
     y = pos[0] // p_size
+
     if square_select == (x, y):
         square_select = ()
         player_move.clear()
@@ -139,24 +144,43 @@ def check_mouse(p, game):
         check_turn(white_turn, player_move, game.board)
 
     if len(player_move) == 2:
-        if not game.restrict(player_move[0], player_move[1]) and not game.move_leads_to_check(player_move[0], player_move[1]):
-            white_turn = not white_turn
+        if not game.restrict(player_move[0], player_move[1]) and not game.move_leads_to_check(player_move[0],
+                                                                                              player_move[1]):
             game.move(player_move[0], player_move[1])
+            white_turn = not white_turn
         player_move.clear()
         square_select = ()
     return white_turn
+
+
 def game_over(screen):
     global game_run, game_state
-    # if game.end_game() == (True, "win"):
-    #     screen.blit(end_game_image[0], p.Rect(0.5 * p_size, 3 * p_size, p_size, p_size))
-    # if game.end_game() == (True, "lose"):
-    #     screen.blit(end_game_image[1], p.Rect(0.5 * p_size, 3 * p_size, p_size, p_size))
-    # if game.end_game() == (True, "draw"):
-    #     screen.blit(end_game_image[2], p.Rect(0.5 * p_size, 3 * p_size, p_size, p_size))
-    if True in game.end_game():
-        # vẽ xong cửa sổ thì cho vô đây (2 cái resetboard với game_state cho vô một button khi bấm thì sẽ thực hiện)
-        reset_board()
-        game_state = 0
+    result = game.end_game()
+
+    if result[0]:
+        if result[1] == "win":
+            screen.blit(end_game_image[0], p.Rect(0.5 * p_size, 3 * p_size, 7 * p_size, 2 * p_size))
+        elif result[1] == "lose":
+            screen.blit(end_game_image[1], p.Rect(0.5 * p_size, 3 * p_size, 7 * p_size, 2 * p_size))
+        elif result[1] == "draw":
+            screen.blit(end_game_image[2], p.Rect(0.5 * p_size, 3 * p_size, 7 * p_size, 2 * p_size))
+
+        # Hiển thị nút Reset
+        menu_rect = p.Rect(0, 0, p_size * 2, p_size // 2)
+        menu_rect.center = (width // 2, height // 2 + p_size * 2)
+        p.draw.rect(screen, p.Color('grey'), menu_rect)
+        font = p.font.SysFont("Georgia", 30)
+        text_surface = font.render("Menu", True, p.Color('black'))
+        text_rect = text_surface.get_rect(center=menu_rect.center)
+        screen.blit(text_surface, text_rect)
+
+        # Kiểm tra nếu nhấn vào nút Menu thì trở lại menu chính
+        for event in p.event.get():
+            if event.type == p.MOUSEBUTTONDOWN:
+                mouse_pos = event.pos
+                if menu_rect.collidepoint(mouse_pos):
+                    game_state = 0
+
 def reset_board():
     global game
     game.board = np.array([

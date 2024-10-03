@@ -1,6 +1,6 @@
 import pygame
 
-from modes import AIEasy, AIHard, pvp
+from modes import AIEasy, AIHard
 import pygame as p
 import random
 import math
