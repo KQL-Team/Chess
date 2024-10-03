@@ -2,12 +2,11 @@
 piece_values = {
     'P': 10,
     'R': 50,
-    'H': 30,
+    'H': 40,
     'B': 30,
     'Q': 90,
     'K': 1000
 }
-
 class AIEasy():
     def __init__(self, game):
         self.game = game
@@ -27,7 +26,8 @@ class AIEasy():
         return evaluation
 
     def alpha_beta(self, depth, alpha, beta, maximizing_player):
-        if depth == 0 :
+        temp_tuple = tuple(tuple(row) for row in self.game.board)
+        if depth == 0:
             return self.evaluate_board(self.game.board), None
         if self.game.end_game() == (True, 'lose'):
             return self.evaluate_board(self.game.board) + 1000000, None
@@ -35,6 +35,10 @@ class AIEasy():
             return self.evaluate_board(self.game.board) - 1000000, None
         if self.game.end_game() == (True, 'draw'):
             return self.evaluate_board(self.game.board) - 500, None
+        if self.game.check_black():
+            return self.evaluate_board(self.game.board) - 10, None
+        if self.game.check_white():
+            return self.evaluate_board(self.game.board) + 10, None
         best_move = None
         if maximizing_player:
             max_eval = float('-inf')
