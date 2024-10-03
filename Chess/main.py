@@ -21,11 +21,11 @@ dim = cg.dim
 p_size = width // dim
 FPS = cg.p_size
 screen = cg.screen
-ai = AIEasy(Game())
 pygame.display.set_caption('Chess')
 p.init()
 clock = p.time.Clock()
 game = chess.Game()
+ai = AIEasy(game)
 square_select = ()
 player_move = []
 white_turn = True
@@ -55,22 +55,34 @@ def main():
     for event in p.event.get():
         if event.type == p.QUIT:
             game_run = False
-        elif event.type == p.MOUSEBUTTONDOWN and game_state == 1:
-            white_turn = check_mouse(p, game)
+        elif event.type == p.MOUSEBUTTONDOWN :
+            if game_state == 1:
+                white_turn = check_mouse(p, game)
+            elif game_state == 2:
+                if white_turn:
+                    white_turn = check_mouse(p, game)
 
-    if game_state == 2:
-        if white_turn:
-            white_turn = check_mouse(p, game)
-        else:
-            ai_move = ai.select_best_move()
-            game.move(ai_move[0], ai_move[1])
-            white_turn = not white_turn
+
+
+    # if game_state == 2:
+    #     if white_turn:
+    #         white_turn = check_mouse(p, game)
+    #     else:
+    #         ai_move = ai.select_best_move()
+    #         game.move(ai_move[0], ai_move[1])
+    #         white_turn = not white_turn
 
     draw_game(screen, game, player_move)
     game_over(screen)
 
     clock.tick(FPS)
+
     p.display.flip()
+    if game_state == 2 and not white_turn:
+        ai_move = ai.select_best_move()
+        if ai_move:
+            game.move(ai_move[0], ai_move[1])
+            white_turn = not white_turn
     return game_run, game_state
 
 
