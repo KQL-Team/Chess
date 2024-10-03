@@ -1,5 +1,4 @@
 import sys
-
 import pygame
 import pygame as p
 from PIL import Image
@@ -7,6 +6,8 @@ import config as cg
 import chess
 import pygame.gfxdraw
 import numpy as np
+from chess import Game
+from Chess.menu import game_state
 from modes.AIEasy import AIEasy
 
 chess_img = {}
@@ -20,9 +21,8 @@ dim = cg.dim
 p_size = width // dim
 FPS = cg.p_size
 screen = cg.screen
-#ai = AIEasy(game)
+ai = AIEasy(Game())
 pygame.display.set_caption('Chess')
-
 p.init()
 clock = p.time.Clock()
 game = chess.Game()
@@ -44,15 +44,27 @@ def load_images():
 
 load_images()
 
+def set_game_state(new_game_state):
+    global game_state
+    game_state = new_game_state
 
 def main():
     global game_run, white_turn, game_state
     screen.fill(p.Color('white'))
+    #print(game_state)
     for event in p.event.get():
         if event.type == p.QUIT:
             game_run = False
         elif event.type == p.MOUSEBUTTONDOWN and game_state == 1:
             white_turn = check_mouse(p, game)
+
+    if game_state == 2:
+        if white_turn:
+            white_turn = check_mouse(p, game)
+        else:
+            ai_move = ai.select_best_move()
+            game.move(ai_move[0], ai_move[1])
+            white_turn = not white_turn
 
     draw_game(screen, game, player_move)
     game_over(screen)
@@ -194,6 +206,5 @@ def reset_board():
             ['wR', 'wH', 'wB', 'wQ', 'wK', 'wB', 'wH', 'wR']
         ])
 def reset():
-    global game_state, white_turn
-    game_state = 1
+    global white_turn
     white_turn = True

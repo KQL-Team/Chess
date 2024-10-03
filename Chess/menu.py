@@ -96,6 +96,7 @@ falling_piece2 = random_pieces()
 count = 0
 
 def run():
+    import main
     speed = 1.5
     global count, falling_piece, falling_piece2, game_state, game_run
     falling_piece[1][1] += speed
@@ -116,6 +117,9 @@ def run():
         falling_piece = random_pieces()
     if falling_piece2[1][1] > height:
         falling_piece2 = random_pieces()
+
+    if game_state != 0:
+        main.set_game_state(game_state)
 
     p.display.flip()
     return game_run, game_state
