@@ -1,4 +1,3 @@
-
 piece_values = {
     'P': 10,
     'R': 50,
@@ -7,10 +6,12 @@ piece_values = {
     'Q': 90,
     'K': 1000
 }
+
 class AIEasy():
     def __init__(self, game):
         self.game = game
-        self.depth = 3
+        self.depth = 2
+        self.transposition_table = {}
 
     def evaluate_board(self, board):
         evaluation = 0
@@ -26,7 +27,9 @@ class AIEasy():
         return evaluation
 
     def alpha_beta(self, depth, alpha, beta, maximizing_player):
-        temp_tuple = tuple(tuple(row) for row in self.game.board)
+        board_hash = hash(tuple(tuple(row) for row in self.game.board))
+        if board_hash in self.transposition_table and self.transposition_table[board_hash]['depth'] >= depth:
+            return self.transposition_table[board_hash]['value'], None
         if depth == 0:
             return self.evaluate_board(self.game.board), None
         if self.game.end_game() == (True, 'lose'):
@@ -62,16 +65,15 @@ class AIEasy():
                 alpha = max(alpha, eval)
                 if beta <= alpha:
                     break
+            self.transposition_table[board_hash] = {'value': max_eval, 'depth': depth}
             return max_eval, best_move
         else:
             min_eval = float('inf')
             for src, dest in self.get_all_moves('w'):
-                print(src, dest)
                 temp_src = self.game.board[src[0]][src[1]]
                 temp_dest = self.game.board[dest[0]][dest[1]]
                 self.game.move(src, dest)
                 eval = self.alpha_beta(depth - 1, alpha, beta, True)[0]
-                print(dest, src, "undo")
                 self.game.board[dest[0]][dest[1]] = temp_dest
                 self.game.board[src[0]][src[1]] = temp_src
                 if temp_src == 'wK' and src == (7,4) and dest == (7,6):
@@ -87,7 +89,15 @@ class AIEasy():
                 beta = min(beta, eval)
                 if beta <= alpha:
                     break
+            self.transposition_table[board_hash] = {'value': min_eval, 'depth': depth}
             return min_eval, best_move
+
+    def order_moves(self, moves, player):
+        def move_value(move):
+            _, dest = move
+            piece = self.game.board[dest[0]][dest[1]]
+            return piece_values.get(piece[1], 0) if piece and piece[0] != player else 0
+        return sorted(moves, key=move_value, reverse=True)
 
     def get_all_moves(self, player):
         all_moves = []
@@ -99,7 +109,7 @@ class AIEasy():
                         for col in range(8):
                             if not self.game.restrict((x, y), (row, col)) and not self.game.move_leads_to_check((x, y), (row, col)):
                                 all_moves.append(((x, y), (row, col)))
-        return all_moves
+        return self.order_moves(all_moves, player)
 
     def select_best_move(self):
         _, best_move = self.alpha_beta(self.depth, float('-inf'), float('inf'), True)

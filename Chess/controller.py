@@ -12,6 +12,7 @@ while game_run:
         game_run, game_state = menu.run()
     else:
         if check:
+            main.reset_board()
             main.reset()
             check = False
         game_run, game_state = main.main()
