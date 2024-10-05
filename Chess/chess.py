@@ -7,14 +7,15 @@ from prompt_toolkit.key_binding.bindings.named_commands import self_insert
 class Game():
     def __init__(self):
         self.board = np.array([
-            ['bR', 'bH', 'bB', 'bQ', 'bK', 'bB', 'bH', 'bR'],
-            ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
-            ['', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', '', ''],
-            ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
-            ['wR', 'wH', 'wB', 'wQ', 'wK', 'wB', 'wH', 'wR']
+            # ['bR', 'bH', 'bB', 'bQ', 'bK', 'bB', 'bH', 'bR'],
+            # ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
+            # ['', '', '', '', '', '', '', ''],
+            # ['', '', '', '', '', '', '', ''],
+            # ['', '', '', '', '', '', '', ''],
+            # ['', '', '', '', '', '', '', ''],
+            # ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
+            # ['wR', 'wH', 'wB', 'wQ', 'wK', 'wB', 'wH', 'wR']
+
         ])
         self.ck = np.zeros((10, 10), dtype=int)
         self.white_check = False
@@ -276,7 +277,8 @@ class Game():
                     if self.board[x][y] != '' and self.board[x][y][0] == "w":
                         for col in range(8):
                             for row in range(8):
-                                if not self.restrict((x, y), (col, row)) and not self.move_leads_to_check((x, y), (col, row)):
+                                if not self.restrict((x, y), (col, row)) and not self.move_leads_to_check((x, y),
+                                                                                                          (col, row)):
                                     return False, "white_check"
             return True, "lose"
         if self.check_black():
@@ -285,7 +287,8 @@ class Game():
                     if self.board[x][y] != '' and self.board[x][y][0] == "b":
                         for col in range(8):
                             for row in range(8):
-                                if not self.restrict((x, y), (col, row)) and not self.move_leads_to_check((x, y), (col, row)):
+                                if not self.restrict((x, y), (col, row)) and not self.move_leads_to_check((x, y),
+                                                                                                          (col, row)):
                                     return False, "black_check"
             return True, "win"
         drawW = 0
@@ -296,13 +299,15 @@ class Game():
                     if self.board[x][y] != '' and self.board[x][y][0] == "b":
                         for col in range(8):
                             for row in range(8):
-                                if not self.restrict((x, y), (col, row)) and not self.move_leads_to_check((x, y), (col, row)):
-                                    drawB =1
+                                if not self.restrict((x, y), (col, row)) and not self.move_leads_to_check((x, y),
+                                                                                                          (col, row)):
+                                    drawB = 1
                     if self.board[x][y] != '' and self.board[x][y][0] == "w":
                         for col in range(8):
                             for row in range(8):
-                                if not self.restrict((x, y), (col, row)) and not self.move_leads_to_check((x, y), (col, row)):
-                                    drawW =1
+                                if not self.restrict((x, y), (col, row)) and not self.move_leads_to_check((x, y),
+                                                                                                          (col, row)):
+                                    drawW = 1
             if drawB == 0 or drawW == 0:
                 return True, "draw"
             else:
