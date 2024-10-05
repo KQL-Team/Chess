@@ -116,7 +116,7 @@ class Game():
         row_diff = abs(src[0] - dest[0])
         col_diff = abs(src[1] - dest[1])
         if piece[0] == 'w' and piece[1] == 'K' and self.ck[7][4] == 0 and not self.white_check:
-            if dest == (7, 1) and self.ck[7][0] == 0 and self.board[7][0] == 'wR':
+            if dest == (7, 2) and self.ck[7][0] == 0 and self.board[7][0] == 'wR':
                 if self.board[7][1] == '' and self.board[7][2] == '' and self.board[7][3] == '':
                     return True
             if dest == (7, 6) and self.ck[7][7] == 0 and self.board[7][7] == 'wR':
@@ -124,7 +124,7 @@ class Game():
                     return True
 
         if piece[0] == 'b' and piece[1] == 'K' and self.ck[0][4] == 0 and not self.black_check:
-            if dest == (0, 1) and self.ck[0][0] == 0 and self.board[0][0] == 'bR':
+            if dest == (0, 2) and self.ck[0][0] == 0 and self.board[0][0] == 'bR':
                 if self.board[0][1] == '' and self.board[0][2] == '' and self.board[0][3] == '':
                     return True
             if dest == (0, 6) and self.ck[0][7] == 0 and self.board[0][7] == 'bR':
@@ -235,12 +235,12 @@ class Game():
     def castling(self, src, dest):
         piece = self.board[src[0]][src[1]]
         if piece[0] == 'w' and piece[1] == 'K' and src == (7, 4):
-            if dest == (7, 1):
+            if dest == (7, 2):
                 self.board[7][4] = ''
-                self.board[7][1] = 'wK'
+                self.board[7][2] = 'wK'
 
                 self.board[7][0] = ''
-                self.board[7][2] = 'wR'
+                self.board[7][3] = 'wR'
                 self.ck[7][4] = 1
                 return True
             elif dest == (7, 6):
@@ -252,12 +252,12 @@ class Game():
                 self.ck[7][4] = 1
                 return True
         if piece[0] == 'b' and piece[1] == 'K' and src == (0, 4):
-            if dest == (0, 1):
-                self.board[0][1] = 'bK'
+            if dest == (0, 2):
+                self.board[0][2] = 'bK'
                 self.board[0][4] = ''
 
                 self.board[0][0] = ''
-                self.board[0][2] = 'bR'
+                self.board[0][3] = 'bR'
                 self.ck[0][4] = 1
                 return True
             elif dest == (0, 6):
