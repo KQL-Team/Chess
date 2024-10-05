@@ -178,8 +178,8 @@ def check_mouse(p, game):
 
 
 def game_over(screen):
-    global game_run, game_state
-    result = game.end_game()
+    global game_run, game_state, white_turn
+    result = game.end_game(white_turn)
 
     if result[0]:
         if result[1] == "win":

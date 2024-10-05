@@ -29,11 +29,11 @@ class AIEasy():
         temp_tuple = tuple(tuple(row) for row in self.game.board)
         if depth == 0:
             return self.evaluate_board(self.game.board), None
-        if self.game.end_game() == (True, 'lose'):
+        if self.game.end_game(False) == (True, 'lose'):
             return self.evaluate_board(self.game.board) + 1000000, None
-        if self.game.end_game() == (True, 'win'):
+        if self.game.end_game(False) == (True, 'win'):
             return self.evaluate_board(self.game.board) - 1000000, None
-        if self.game.end_game() == (True, 'draw'):
+        if self.game.end_game(False) == (True, 'draw'):
             return self.evaluate_board(self.game.board) - 500, None
         best_move = None
         if maximizing_player:

@@ -270,7 +270,7 @@ class Game():
                 return True
         return False
 
-    def end_game(self):
+    def end_game(self, white_turn):
         if self.check_white():
             for x in range(8):
                 for y in range(8):
@@ -305,10 +305,9 @@ class Game():
                     if self.board[x][y] != '' and self.board[x][y][0] == "w":
                         for col in range(8):
                             for row in range(8):
-                                if not self.restrict((x, y), (col, row)) and not self.move_leads_to_check((x, y),
-                                                                                                          (col, row)):
+                                if not self.restrict((x, y), (col, row)) and not self.move_leads_to_check((x, y), (col, row)):
                                     drawW = 1
-            if drawB == 0 or drawW == 0:
+            if (drawB == 0 and not white_turn) or (drawW == 0 and white_turn):
                 return True, "draw"
             else:
                 return False, "cont"
