@@ -41,7 +41,11 @@ class AIEasy():
             for src, dest in self.get_all_moves('b'):
                 temp_src = self.game.board[src[0]][src[1]]
                 temp_dest = self.game.board[dest[0]][dest[1]]
-                self.game.move(src, dest)
+                if not self.check_transform(src, dest):
+                    self.game.move(src, dest)
+                else:
+                    self.game.board[src[0]][src[1]] = ''
+                    self.game.board[dest[0]][dest[1]] = 'bQ'
                 eval = self.alpha_beta(depth - 1, alpha, beta, False)[0]
                 self.game.board[dest[0]][dest[1]] = temp_dest
                 self.game.board[src[0]][src[1]] = temp_src
@@ -62,12 +66,14 @@ class AIEasy():
         else:
             min_eval = float('inf')
             for src, dest in self.get_all_moves('w'):
-                print(src, dest)
                 temp_src = self.game.board[src[0]][src[1]]
                 temp_dest = self.game.board[dest[0]][dest[1]]
-                self.game.move(src, dest)
+                if not self.check_transform(src, dest):
+                    self.game.move(src, dest)
+                else:
+                    self.game.board[src[0]][src[1]] = ''
+                    self.game.board[dest[0]][dest[1]] = 'wQ'
                 eval = self.alpha_beta(depth - 1, alpha, beta, True)[0]
-                print(dest, src, "undo")
                 self.game.board[dest[0]][dest[1]] = temp_dest
                 self.game.board[src[0]][src[1]] = temp_src
                 if temp_src == 'wK' and src == (7,4) and dest == (7,6):
@@ -100,3 +106,10 @@ class AIEasy():
     def select_best_move(self):
         _, best_move = self.alpha_beta(self.depth, float('-inf'), float('inf'), True)
         return best_move
+    def check_transform(self, src, dest):
+        piece = self.game.board[src[0]][src[1]]
+        if piece == 'wP' and dest[0] == 0:
+            return True
+        if piece == 'bP' and dest[0] == 7:
+            return True
+        return False
