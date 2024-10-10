@@ -110,14 +110,14 @@ class AIEasy():
         return evaluation
 
     def alpha_beta(self, depth, alpha, beta, maximizing_player):
+        if depth == 0:
+            return self.evaluate_board(self.game.board), None
         if self.game.end_game(False) == (True, 'lose'):
             return self.evaluate_board(self.game.board) + 1000000, None
         if self.game.end_game(False) == (True, 'win'):
             return self.evaluate_board(self.game.board) - 1000000, None
         if self.game.end_game(False) == (True, 'draw'):
             return self.evaluate_board(self.game.board) - 500, None
-        if depth == 0:
-            return self.evaluate_board(self.game.board), None
         best_move = None
         if maximizing_player:
             max_eval = float('-inf')
@@ -132,8 +132,8 @@ class AIEasy():
                 eval = self.alpha_beta(depth - 1, alpha, beta, False)[0]
                 self.game.board[dest[0]][dest[1]] = temp_dest
                 self.game.board[src[0]][src[1]] = temp_src
-                if temp_src == 'bK' and src == (0, 4) and dest == (0, 1):
-                    self.game.board[0][2] = ''
+                if temp_src == 'bK' and src == (0, 4) and dest == (0, 2):
+                    self.game.board[0][3] = ''
                     self.game.board[0][0] = 'bR'
                 elif temp_src == 'bK' and src == (0, 4) and dest == (0, 6):
                     self.game.board[0][5] = ''
@@ -163,8 +163,8 @@ class AIEasy():
                 if temp_src == 'wK' and src == (7, 4) and dest == (7, 6):
                     self.game.board[7][5] = ''
                     self.game.board[7][7] = 'wR'
-                elif temp_src == 'wK' and src == (7, 4) and dest == (7, 1):
-                    self.game.board[7][2] = ''
+                elif temp_src == 'wK' and src == (7, 4) and dest == (7, 2):
+                    self.game.board[7][3] = ''
                     self.game.board[7][0] = 'wR'
                 self.game.ck[src[0]][src[1]] = 0
                 if eval < min_eval:

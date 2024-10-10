@@ -69,8 +69,8 @@ class AIHard():
                     boards.append(self.encode_board(self.game.board))
                     self.game.board[dest[0]][dest[1]] = temp_dest
                     self.game.board[src[0]][src[1]] = temp_src
-                    if temp_src == 'bK' and src == (0, 4) and dest == (0, 1):
-                        self.game.board[0][2] = ''
+                    if temp_src == 'bK' and src == (0, 4) and dest == (0, 2):
+                        self.game.board[0][3] = ''
                         self.game.board[0][0] = 'bR'
                     elif temp_src == 'bK' and src == (0, 4) and dest == (0, 6):
                         self.game.board[0][5] = ''
@@ -98,8 +98,8 @@ class AIHard():
                 if temp_src == 'wK' and src == (7,4) and dest == (7,6):
                     self.game.board[7][5] = ''
                     self.game.board[7][7] = 'wR'
-                elif temp_src == 'wK' and src == (7,4) and dest == (7,1):
-                    self.game.board[7][2] = ''
+                elif temp_src == 'wK' and src == (7,4) and dest == (7,2):
+                    self.game.board[7][3] = ''
                     self.game.board[7][0] = 'wR'
                 self.game.ck[src[0]][src[1]] = 0
                 if eval < min_eval:
