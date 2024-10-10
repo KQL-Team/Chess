@@ -1,7 +1,7 @@
 import numpy as np
 from keras.models import load_model
 import tensorflow as tf
-import h5py
+import time
 pieces = ['bR', 'bH', 'bB', 'bQ', 'bK', 'bP', 'wR', 'wH', 'wB', 'wQ', 'wK', 'wP', '']
 tf.get_logger().setLevel('ERROR')
 chess_model = load_model('chess_model.h5')
@@ -26,20 +26,21 @@ class AIHard():
         return np.array(board_list)
 
 
-    def evaluate_board(self, board):
-        encoded_board = self.encode_board(board).reshape(1,8,8,13)
-        prediction = chess_model.predict(encoded_board)
+    def evaluate_board(self, boards):
+        prediction = chess_model.predict(boards)
         return prediction
     def alpha_beta(self, depth, alpha, beta, maximizing_player):
-        if depth == 0:
-            return self.evaluate_board(self.game.board), None
+        global total_time
+        if depth != 1:
+            print(total_time)
         if self.game.end_game(False) == (True, 'lose'):
-            return self.evaluate_board(self.game.board) + 1000000, None
+            return 1000000, None
         if self.game.end_game(False) == (True, 'win'):
-            return self.evaluate_board(self.game.board) - 1000000, None
+            return -1000000, None
         if self.game.end_game(False) == (True, 'draw'):
-            return self.evaluate_board(self.game.board) - 500, None
+            return -500, None
         best_move = None
+        boards = []
         if maximizing_player:
             max_eval = float('-inf')
             for src, dest in self.get_all_moves('b'):
@@ -50,22 +51,42 @@ class AIHard():
                 else:
                     self.game.board[src[0]][src[1]] = ''
                     self.game.board[dest[0]][dest[1]] = 'bQ'
-                eval = self.alpha_beta(depth - 1, alpha, beta, False)[0]
-                self.game.board[dest[0]][dest[1]] = temp_dest
-                self.game.board[src[0]][src[1]] = temp_src
-                if temp_src == 'bK' and src == (0,4) and dest == (0,1):
-                    self.game.board[0][2] = ''
-                    self.game.board[0][0] = 'bR'
-                elif temp_src == 'bK' and src == (0,4) and dest == (0,6):
-                    self.game.board[0][5] = ''
-                    self.game.board[0][7] = 'bR'
-                self.game.ck[src[0]][src[1]] = 0
-                if eval > max_eval:
-                    max_eval = eval
-                    best_move = (src, dest)
-                alpha = max(alpha, eval)
-                if beta <= alpha:
-                    break
+                if depth != 1:
+                    eval = self.alpha_beta(depth - 1, alpha, beta, False)[0]
+                    self.game.board[dest[0]][dest[1]] = temp_dest
+                    self.game.board[src[0]][src[1]] = temp_src
+                    if temp_src == 'bK' and src == (0, 4) and dest == (0, 1):
+                        self.game.board[0][2] = ''
+                        self.game.board[0][0] = 'bR'
+                    elif temp_src == 'bK' and src == (0, 4) and dest == (0, 6):
+                        self.game.board[0][5] = ''
+                        self.game.board[0][7] = 'bR'
+                    self.game.ck[src[0]][src[1]] = 0
+                    if eval > max_eval:
+                        max_eval = eval
+                        best_move = (src, dest)
+                    alpha = max(alpha, eval)
+                    if beta <= alpha:
+                        break
+                elif depth == 1:
+                    boards.append(self.encode_board(self.game.board))
+                    self.game.board[dest[0]][dest[1]] = temp_dest
+                    self.game.board[src[0]][src[1]] = temp_src
+                    if temp_src == 'bK' and src == (0, 4) and dest == (0, 1):
+                        self.game.board[0][2] = ''
+                        self.game.board[0][0] = 'bR'
+                    elif temp_src == 'bK' and src == (0, 4) and dest == (0, 6):
+                        self.game.board[0][5] = ''
+                        self.game.board[0][7] = 'bR'
+                    self.game.ck[src[0]][src[1]] = 0
+            if depth == 1:
+                boards = tf.convert_to_tensor(boards)
+                start_time = time.time()
+                predictions = self.evaluate_board(boards)
+                end_time = time.time()
+                total_time += (end_time - start_time)
+                max_eval = tf.reduce_max(predictions)
+                boards = []
             return max_eval, best_move
         else:
             min_eval = float('inf')
@@ -117,3 +138,37 @@ class AIHard():
                             if not self.game.restrict((x, y), (row, col)) and not self.game.move_leads_to_check((x, y), (row, col)):
                                 all_moves.append(((x, y), (row, col)))
         return all_moves
+# board = np.array([
+#             ['bR', 'bH', 'bB', 'bQ', 'bK', 'bB', 'bH', 'bR'],
+#             ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
+#             ['', '', '', '', '', '', '', ''],
+#             ['', '', '', '', '', '', '', ''],
+#             ['', '', '', '', '', '', '', ''],
+#             ['', '', '', '', '', '', '', ''],
+#             ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
+#             ['wR', 'wH', 'wB', 'wQ', 'wK', 'wB', 'wH', 'wR']
+#         ])
+#
+#
+#
+# def one_hot_encode_piece(piece):
+#     global pieces
+#     arr = np.zeros(len(pieces), dtype=np.uint8)
+#     piece_to_index = {p: i for i, p in enumerate(pieces)}
+#     index = piece_to_index[piece]
+#     arr[index] = 1
+#     return arr
+#
+#
+# def encode_board(board):
+#     board_list = []
+#     for row in board:
+#         row_list = []
+#         for piece in row:
+#             row_list.append(one_hot_encode_piece(piece))
+#         board_list.append(row_list)
+#     return np.array(board_list)
+# encoded = encode_board(board)
+# boards = [encoded, encoded]
+# boards =tf.convert_to_tensor(boards)
+# print(boards.shape)
