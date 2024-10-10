@@ -95,29 +95,32 @@ class AIEasy():
         evaluation = 0
         for x in range(8):
             for y in range(8):
-                piece_values = {
-                    'P': (10 + pawnPoint[7-x][7-y]),
-                    'R': (50 + rockPoint[7-x][7-y]),
-                    'H': (30 + knightPoint[7-x][7-y]),
-                    'B': (30 + bishopPoint[7-x][7-y]),
-                    'Q': (100 + queenPoint[7-x][7-y]),
-                    'K': (1000 + kingMidPoint[7-x][7-y]),
-                    # 'P': (100 + pawnPoint[x][y]),
-                    # 'R': (500 + rockPoint[x][y]),
-                    # 'H': (300 + knightPoint[x][y]),
-                    # 'B': (300 + bishopPoint[x][y]),
-                    # 'Q': (1000 + queenPoint[x][y]),
-                    # 'K': (10000 + kingMidPoint[x][y]),
-                }
+
                 piece = board[x][y]
                 if piece != '':
-
-                    value = piece_values.get(piece[1], 0)
                     if piece[0] == 'b':
+                        piece_values = {
+                            'P': (10 + pawnPoint[7 - x][7 - y]),
+                            'R': (50 + rockPoint[7 - x][7 - y]),
+                            'H': (30 + knightPoint[7 - x][7 - y]),
+                            'B': (30 + bishopPoint[7 - x][7 - y]),
+                            'Q': (100 + queenPoint[7 - x][7 - y]),
+                            'K': (1000 + kingMidPoint[7 - x][7 - y]),
+                        }
+                        value = piece_values.get(piece[1], 0)
                         evaluation += value
                     else:
+                        piece_values = {
+                            'P': (10 + pawnPoint[x][y]),
+                            'R': (50 + rockPoint[x][y]),
+                            'H': (30 + knightPoint[x][y]),
+                            'B': (30 + bishopPoint[x][y]),
+                            'Q': (100 + queenPoint[x][y]),
+                            'K': (1000 + kingMidPoint[x][y]),
+                        }
+                        value = piece_values.get(piece[1], 0)
                         evaluation -= value
-            print("Evaluation:", evaluation)
+        print("Evaluation:", evaluation)
         return evaluation
 
     def alpha_beta(self, depth, alpha, beta, maximizing_player):

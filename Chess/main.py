@@ -9,6 +9,8 @@ import numpy as np
 from chess import Game
 from Chess.menu import game_state
 from modes.AIEasy import AIEasy
+from modes.AIHard import AIHard
+from modes import AIHard as AH
 
 chess_img = {}
 end_game_image = []
@@ -26,6 +28,7 @@ p.init()
 clock = p.time.Clock()
 game = chess.Game()
 ai = AIEasy(game)
+ai2 = AIHard(game)
 square_select = ()
 player_move = []
 white_turn = True
@@ -58,12 +61,9 @@ def main():
         elif event.type == p.MOUSEBUTTONDOWN :
             if game_state == 1:
                 white_turn = check_mouse(p, game)
-            elif game_state == 2:
+            elif game_state == 2 or game_state == 3:
                 if white_turn:
                     white_turn = check_mouse(p, game)
-
-
-
     # if game_state == 2:
     #     if white_turn:
     #         white_turn = check_mouse(p, game)
@@ -83,9 +83,12 @@ def main():
         if ai_move:
             game.move(ai_move[0], ai_move[1])
             white_turn = not white_turn
+    if game_state == 3 and not white_turn:
+        ai_move = ai2.select_best_move()
+        if ai_move:
+            game.move(ai_move[0], ai_move[1])
+            white_turn = not white_turn
     return game_run, game_state
-
-
 def draw_game(screen, game, player_move):
     if len(player_move) == 1:
         draw_temp_board(screen, game, player_move)
