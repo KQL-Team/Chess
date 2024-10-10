@@ -1,12 +1,91 @@
+pawnPoint = [
+    [900, 900, 900, 900, 900, 900, 900, 900],
+    [50, 50, 50, 50, 50, 50, 50, 50],
+    [10, 10, 20, 30, 30, 20, 10, 10],
+    [5, 5, 10, 25, 25, 10, 5, 5],
+    [0, 0, 0, 20, 20, 0, 0, 0],
+    [5, -5, -10, 0, 0, -10, -5, 5],
+    [5, 10, 10, -20, -20, 10, 10, 5],
+    [0, 0, 0, 0, 0, 0, 0, 0]
+]
 
-piece_values = {
-    'P': 10,
-    'R': 50,
-    'H': 30,
-    'B': 30,
-    'Q': 100,
-    'K': 1000
-}
+knightPoint = [
+    [-50, -40, -30, -30, -30, -30, -40, -50],
+    [-40, -20, 0, 0, 0, 0, -20, -40],
+    [-30, 0, 10, 15, 15, 10, 0, -30],
+    [-30, 5, 15, 20, 20, 15, 5, -30],
+    [-30, 0, 15, 20, 20, 15, 0, -30],
+    [-30, 5, 10, 15, 15, 10, 5, -30],
+    [-40, -20, 0, 5, 5, 0, -20, -40],
+    [-50, -40, -30, -30, -30, -30, -40, -50]
+]
+
+bishopPoint = [
+    [-20, -10, -10, -10, -10, -10, -10, -20],
+    [-10, 0, 0, 0, 0, 0, 0, -10],
+    [-10, 0, 5, 10, 10, 5, 0, -10],
+    [-10, 5, 5, 10, 10, 5, 5, -10],
+    [-10, 0, 10, 10, 10, 10, 0, -10],
+    [-10, 10, 10, 10, 10, 10, 10, -10],
+    [-10, 5, 0, 0, 0, 0, 5, -10],
+    [-20, -10, -10, -10, -10, -10, -10, -20]
+]
+
+rockPoint = [
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [5, 10, 10, 10, 10, 10, 10, 5],
+    [-5, 0, 0, 0, 0, 0, 0, -5],
+    [-5, 0, 0, 0, 0, 0, 0, -5],
+    [-5, 0, 0, 0, 0, 0, 0, -5],
+    [-5, 0, 0, 0, 0, 0, 0, -5],
+    [-5, 0, 0, 0, 0, 0, 0, -5],
+    [0, 0, 0, 5, 5, 0, 0, 0]
+]
+
+queenPoint = [
+    [-20, -10, -10, -5, -5, -10, -10, -20],
+    [-10, 0, 0, 0, 0, 0, 0, -10],
+    [-10, 0, 5, 5, 5, 5, 0, -10],
+    [-5, 0, 5, 5, 5, 5, 0, -5],
+    [0, 0, 5, 5, 5, 5, 0, -5],
+    [-10, 5, 5, 5, 5, 5, 0, -10],
+    [-10, 0, 5, 0, 0, 0, 0, -10],
+    [-20, -10, -10, -5, -5, -10, -10, -20]
+]
+
+kingMidPoint = [
+    [-30, -40, -40, -50, -50, -40, -40, -30],
+    [-30, -40, -40, -50, -50, -40, -40, -30],
+    [-30, -40, -40, -50, -50, -40, -40, -30],
+    [-30, -40, -40, -50, -50, -40, -40, -30],
+    [-20, -30, -30, -40, -40, -30, -30, -20],
+    [-10, -20, -20, -20, -20, -20, -20, -10],
+    [20, 20, 0, 0, 0, 0, 20, 20],
+    [20, 30, 10, 0, 0, 10, 30, 20]
+]
+
+kingEndPoint = [
+    [-50, -40, -30, -20, -20, -30, -40, -50],
+    [-30, -20, -10, 0, 0, -10, -20, -30],
+    [-30, -10, 20, 30, 30, 20, -10, -30],
+    [-30, -10, 30, 40, 40, 30, -10, -30],
+    [-30, -10, 30, 40, 40, 30, -10, -30],
+    [-30, -10, 20, 30, 30, 20, -10, -30],
+    [-30, -30, 0, 0, 0, 0, -30, -30],
+    [-50, -30, -30, -30, -30, -30, -30, -50]
+]
+# for x in range(8):
+#     for y in range(8):
+#         piece_values = {
+#             'P': 10 + pawnPoint[7-x][7-y],
+#             'R': 50 + rockPoint[7-x][7-y],
+#             'H': 30 + knightPoint[7-x][7-y],
+#             'B': 30 + bishopPoint[7-x][7-y],
+#             'Q': 100 + queenPoint[7-x][7-y],
+#             'K': 1000 + kingMidPoint[7-x][7-y],
+#         }
+
+
 class AIEasy():
     def __init__(self, game):
         self.game = game
@@ -16,13 +95,29 @@ class AIEasy():
         evaluation = 0
         for x in range(8):
             for y in range(8):
+                piece_values = {
+                    'P': (10 + pawnPoint[7-x][7-y]),
+                    'R': (50 + rockPoint[7-x][7-y]),
+                    'H': (30 + knightPoint[7-x][7-y]),
+                    'B': (30 + bishopPoint[7-x][7-y]),
+                    'Q': (100 + queenPoint[7-x][7-y]),
+                    'K': (1000 + kingMidPoint[7-x][7-y]),
+                    # 'P': (100 + pawnPoint[x][y]),
+                    # 'R': (500 + rockPoint[x][y]),
+                    # 'H': (300 + knightPoint[x][y]),
+                    # 'B': (300 + bishopPoint[x][y]),
+                    # 'Q': (1000 + queenPoint[x][y]),
+                    # 'K': (10000 + kingMidPoint[x][y]),
+                }
                 piece = board[x][y]
                 if piece != '':
+
                     value = piece_values.get(piece[1], 0)
                     if piece[0] == 'b':
                         evaluation += value
                     else:
                         evaluation -= value
+            print("Evaluation:", evaluation)
         return evaluation
 
     def alpha_beta(self, depth, alpha, beta, maximizing_player):
@@ -49,10 +144,10 @@ class AIEasy():
                 eval = self.alpha_beta(depth - 1, alpha, beta, False)[0]
                 self.game.board[dest[0]][dest[1]] = temp_dest
                 self.game.board[src[0]][src[1]] = temp_src
-                if temp_src == 'bK' and src == (0,4) and dest == (0,1):
+                if temp_src == 'bK' and src == (0, 4) and dest == (0, 1):
                     self.game.board[0][2] = ''
                     self.game.board[0][0] = 'bR'
-                elif temp_src == 'bK' and src == (0,4) and dest == (0,6):
+                elif temp_src == 'bK' and src == (0, 4) and dest == (0, 6):
                     self.game.board[0][5] = ''
                     self.game.board[0][7] = 'bR'
                 self.game.ck[src[0]][src[1]] = 0
@@ -76,10 +171,10 @@ class AIEasy():
                 eval = self.alpha_beta(depth - 1, alpha, beta, True)[0]
                 self.game.board[dest[0]][dest[1]] = temp_dest
                 self.game.board[src[0]][src[1]] = temp_src
-                if temp_src == 'wK' and src == (7,4) and dest == (7,6):
+                if temp_src == 'wK' and src == (7, 4) and dest == (7, 6):
                     self.game.board[7][5] = ''
                     self.game.board[7][7] = 'wR'
-                elif temp_src == 'wK' and src == (7,4) and dest == (7,1):
+                elif temp_src == 'wK' and src == (7, 4) and dest == (7, 1):
                     self.game.board[7][2] = ''
                     self.game.board[7][0] = 'wR'
                 self.game.ck[src[0]][src[1]] = 0
@@ -99,13 +194,16 @@ class AIEasy():
                 if piece != '' and piece[0] == player:
                     for row in range(8):
                         for col in range(8):
-                            if not self.game.restrict((x, y), (row, col)) and not self.game.move_leads_to_check((x, y), (row, col)):
+                            if not self.game.restrict((x, y), (row, col)) and not self.game.move_leads_to_check((x, y),
+                                                                                                                (row,
+                                                                                                                 col)):
                                 all_moves.append(((x, y), (row, col)))
         return all_moves
 
     def select_best_move(self):
         _, best_move = self.alpha_beta(self.depth, float('-inf'), float('inf'), True)
         return best_move
+
     def check_transform(self, src, dest):
         piece = self.game.board[src[0]][src[1]]
         if piece == 'wP' and dest[0] == 0:
