@@ -78,10 +78,7 @@ class AIHard():
                     self.game.ck[src[0]][src[1]] = 0
             if depth == 1:
                 boards = tf.convert_to_tensor(boards)
-                start_time = time.time()
                 predictions = self.evaluate_board(boards)
-                end_time = time.time()
-                total_time += (end_time - start_time)
                 max_eval = tf.reduce_max(predictions)
                 boards = []
             return max_eval, best_move
