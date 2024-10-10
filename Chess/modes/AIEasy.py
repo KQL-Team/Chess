@@ -74,55 +74,39 @@ kingEndPoint = [
     [-30, -30, 0, 0, 0, 0, -30, -30],
     [-50, -30, -30, -30, -30, -30, -30, -50]
 ]
-# for x in range(8):
-#     for y in range(8):
-#         piece_values = {
-#             'P': 10 + pawnPoint[7-x][7-y],
-#             'R': 50 + rockPoint[7-x][7-y],
-#             'H': 30 + knightPoint[7-x][7-y],
-#             'B': 30 + bishopPoint[7-x][7-y],
-#             'Q': 100 + queenPoint[7-x][7-y],
-#             'K': 1000 + kingMidPoint[7-x][7-y],
-#         }
 
-import time
+
 class AIEasy():
     def __init__(self, game):
         self.game = game
         self.depth = 3
 
     def evaluate_board(self, board):
-        start_time = time.time()
         evaluation = 0
         for x in range(8):
             for y in range(8):
-
                 piece = board[x][y]
+                piece_values = {
+                    'bP': (100 + pawnPoint[7 - x][7 - y]),
+                    'bR': (500 + rockPoint[7 - x][7 - y]),
+                    'bH': (300 + knightPoint[7 - x][7 - y]),
+                    'bB': (300 + bishopPoint[7 - x][7 - y]),
+                    'bQ': (1000 + queenPoint[7 - x][7 - y]),
+                    'bK': (10000 + kingMidPoint[7 - x][7 - y]),
+
+                    'wP': (100 + pawnPoint[x][y]),
+                    'wR': (500 + rockPoint[x][y]),
+                    'wH': (300 + knightPoint[x][y]),
+                    'wB': (300 + bishopPoint[x][y]),
+                    'wQ': (1000 + queenPoint[x][y]),
+                    'wK': (10000 + kingMidPoint[x][y]),
+                }
+                value = piece_values.get(piece, 0)
                 if piece != '':
                     if piece[0] == 'b':
-                        piece_values = {
-                            'P': (100 + pawnPoint[7 - x][7 - y]),
-                            'R': (500 + rockPoint[7 - x][7 - y]),
-                            'H': (300 + knightPoint[7 - x][7 - y]),
-                            'B': (300 + bishopPoint[7 - x][7 - y]),
-                            'Q': (1000 + queenPoint[7 - x][7 - y]),
-                            'K': (10000 + kingMidPoint[7 - x][7 - y]),
-                        }
-                        value = piece_values.get(piece[1], 0)
                         evaluation += value
                     else:
-                        piece_values = {
-                            'P': (100 + pawnPoint[x][y]),
-                            'R': (500 + rockPoint[x][y]),
-                            'H': (300 + knightPoint[x][y]),
-                            'B': (300 + bishopPoint[x][y]),
-                            'Q': (1000 + queenPoint[x][y]),
-                            'K': (10000 + kingMidPoint[x][y]),
-                        }
-                        value = piece_values.get(piece[1], 0)
                         evaluation -= value
-        end_time = time.time()
-        print(end_time-start_time)
         return evaluation
 
     def alpha_beta(self, depth, alpha, beta, maximizing_player):

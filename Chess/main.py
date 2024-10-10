@@ -88,6 +88,7 @@ def main():
         if ai_move:
             game.move(ai_move[0], ai_move[1])
             white_turn = not white_turn
+            print("Best evaluation:", ai.evaluate_board(game.board))
     return game_run, game_state
 def draw_game(screen, game, player_move):
     if len(player_move) == 1:
