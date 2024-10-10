@@ -30,9 +30,6 @@ class AIHard():
         prediction = chess_model.predict(boards)
         return prediction
     def alpha_beta(self, depth, alpha, beta, maximizing_player):
-        global total_time
-        if depth != 1:
-            print(total_time)
         if self.game.end_game(False) == (True, 'lose'):
             return 1000000, None
         if self.game.end_game(False) == (True, 'win'):
