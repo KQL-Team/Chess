@@ -112,12 +112,13 @@ class AIEasy():
     def alpha_beta(self, depth, alpha, beta, maximizing_player):
         if depth == 0:
             return self.evaluate_board(self.game.board), None
-        if self.game.end_game(False) == (True, 'lose'):
-            return self.evaluate_board(self.game.board) + 1000000, None
-        if self.game.end_game(False) == (True, 'win'):
-            return self.evaluate_board(self.game.board) - 1000000, None
-        if self.game.end_game(False) == (True, 'draw'):
-            return self.evaluate_board(self.game.board) - 500, None
+        check_end = self.game.end_game(False)
+        if check_end == (True, 'win'):
+            return -1000000, None
+        if check_end == (True, 'lose'):
+            return 1000000, None
+        if check_end == (True, 'draw'):
+            return -500, None
         best_move = None
         if maximizing_player:
             max_eval = float('-inf')

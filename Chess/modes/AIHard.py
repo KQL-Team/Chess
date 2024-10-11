@@ -132,37 +132,3 @@ class AIHard():
                             if not self.game.restrict((x, y), (row, col)) and not self.game.move_leads_to_check((x, y), (row, col)):
                                 all_moves.append(((x, y), (row, col)))
         return all_moves
-# board = np.array([
-#             ['bR', 'bH', 'bB', 'bQ', 'bK', 'bB', 'bH', 'bR'],
-#             ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
-#             ['', '', '', '', '', '', '', ''],
-#             ['', '', '', '', '', '', '', ''],
-#             ['', '', '', '', '', '', '', ''],
-#             ['', '', '', '', '', '', '', ''],
-#             ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
-#             ['wR', 'wH', 'wB', 'wQ', 'wK', 'wB', 'wH', 'wR']
-#         ])
-#
-#
-#
-# def one_hot_encode_piece(piece):
-#     global pieces
-#     arr = np.zeros(len(pieces), dtype=np.uint8)
-#     piece_to_index = {p: i for i, p in enumerate(pieces)}
-#     index = piece_to_index[piece]
-#     arr[index] = 1
-#     return arr
-#
-#
-# def encode_board(board):
-#     board_list = []
-#     for row in board:
-#         row_list = []
-#         for piece in row:
-#             row_list.append(one_hot_encode_piece(piece))
-#         board_list.append(row_list)
-#     return np.array(board_list)
-# encoded = encode_board(board)
-# boards = [encoded, encoded]
-# boards =tf.convert_to_tensor(boards)
-# print(boards.shape)
