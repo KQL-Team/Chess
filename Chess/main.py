@@ -3,10 +3,10 @@ import pygame
 import pygame as p
 from PIL import Image
 import config as cg
-import chess
+import game
 import pygame.gfxdraw
 import numpy as np
-from chess import Game
+from game import Game
 from Chess.menu import game_state
 from modes.AIEasy import AIEasy
 from modes.AIHard import AIHard
@@ -26,8 +26,8 @@ screen = cg.screen
 pygame.display.set_caption('Chess')
 p.init()
 clock = p.time.Clock()
-game = chess.Game()
-ai1 = AIEasy(game)
+game = game.Game()
+ai = AIEasy(game)
 ai2 = AIHard(game)
 square_select = ()
 player_move = []
@@ -61,10 +61,16 @@ def main():
         elif event.type == p.MOUSEBUTTONDOWN :
             if game_state == 1:
                 white_turn = check_mouse(p, game)
-            elif game_state == 2:
+            elif game_state == 2 or game_state == 3:
                 if white_turn:
                     white_turn = check_mouse(p, game)
-
+    # if game_state == 2:
+    #     if white_turn:
+    #         white_turn = check_mouse(p, game)
+    #     else:
+    #         ai_move = ai.select_best_move()
+    #         game.move(ai_move[0], ai_move[1])
+    #         white_turn = not white_turn
 
     draw_game(screen, game, player_move)
     game_over(screen)
@@ -73,29 +79,15 @@ def main():
 
     p.display.flip()
     if game_state == 2 and not white_turn:
-        ai_move = ai1.select_best_move()
+        ai_move = ai.select_best_move()
         if ai_move:
             game.move(ai_move[0], ai_move[1])
             white_turn = not white_turn
-    if game_state == 3:
-        if white_turn:
-            ai1_move = ai1.select_best_move()
-            if ai1_move:
-                game.move(ai1_move[0], ai1_move[1])
-                white_turn = not white_turn
-                print("Best evaluation:", ai1.evaluate_board(game.board))
-                draw_game(screen, game, player_move)
-                p.display.flip()
-        if not white_turn:
-            ai2_move = ai2.select_best_move()
-            if ai2_move:
-                game.move(ai2_move[0], ai2_move[1])
-                white_turn = not white_turn
-                print("Best evaluation:", ai1.evaluate_board(game.board))
-                draw_game(screen, game, player_move)
-
-                p.display.flip()
-
+    if game_state == 3 and not white_turn:
+        ai_move = ai2.select_best_move()
+        if ai_move:
+            game.move(ai_move[0], ai_move[1])
+            white_turn = not white_turn
     return game_run, game_state
 def draw_game(screen, game, player_move):
     if len(player_move) == 1:
