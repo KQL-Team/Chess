@@ -96,7 +96,7 @@ class AIEasy():
         for x in range(8):
             for y in range(8):
                 piece = board[x][y]
-                if np.sum(self.game.board == '') <=54:
+                if np.sum(self.game.board == '') <=50:
                     piece_values = {
                         'bP': (100 + pawnPoint[7 - x][7 - y]),
                         'bR': (500 + rockPoint[7 - x][7 - y]),
@@ -119,7 +119,7 @@ class AIEasy():
                         'bH': (300 + knightPoint[7 - x][7 - y]),
                         'bB': (300 + bishopPoint[7 - x][7 - y]),
                         'bQ': (1000 + queenPoint[7 - x][7 - y]),
-                        'bK': (10000 + kingMEndPoint[7 - x][7 - y]),
+                        'bK': (10000 + kingEndPoint[7 - x][7 - y]),
 
                         'wP': (100 + pawnPoint[x][y]),
                         'wR': (500 + rockPoint[x][y]),
