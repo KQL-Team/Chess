@@ -82,6 +82,7 @@ import pandas as pd
 import numpy as np
 import chess
 import random
+hash_table = {}
 data = pd.read_csv('./my_list.csv')
 chess_opening = data.values.tolist()
 chess_opening = [chess[0] for chess in chess_opening]
@@ -136,11 +137,13 @@ class AIEasy():
         return evaluation
 
     def alpha_beta(self, depth, alpha, beta, maximizing_player):
+        if (tuple(map(tuple,self.game.board)), depth) in hash_table.keys():
+            return hash_table[(tuple(map(tuple,self.game.board)), depth)], None
         if self.game.pyboard.is_game_over():
             if self.game.pyboard.turn == chess.WHITE:
-                return -1000000, None
-            else:
                 return 1000000, None
+            else:
+                return -1000000, None
         if depth == 0:
             return self.evaluate_board(self.game.board), None
         check_end = self.game.end_game(False)
@@ -150,15 +153,15 @@ class AIEasy():
             for src, dest in self.get_all_moves('b'):
                 temp_src = self.game.board[src[0]][src[1]]
                 temp_dest = self.game.board[dest[0]][dest[1]]
+                temp_ck = self.game.ck[src[0]][src[1]]
                 if not self.check_transform(src, dest):
-                    print(self.game.pyboard)
-                    print(self.game.board)
                     self.game.move(src, dest)
                 else:
                     self.game.board[src[0]][src[1]] = ''
                     self.game.board[dest[0]][dest[1]] = 'bQ'
                     self.game.pyboard.push(chess.Move.from_uci(self.game.move_to_fen(src, dest) + 'q'))
                 eval = self.alpha_beta(depth - 1, alpha, beta, False)[0]
+                hash_table[(tuple(map(tuple,self.game.board)), depth-1)] = eval
                 self.game.board[dest[0]][dest[1]] = temp_dest
                 self.game.board[src[0]][src[1]] = temp_src
                 if temp_src == 'bK' and src == (0, 4) and dest == (0, 2):
@@ -168,7 +171,7 @@ class AIEasy():
                     self.game.board[0][5] = ''
                     self.game.board[0][7] = 'bR'
                 self.game.pyboard.pop()
-                self.game.ck[src[0]][src[1]] = 0
+                self.game.ck[src[0]][src[1]] = temp_ck
 
                 if eval > max_eval:
                     max_eval = eval
@@ -185,11 +188,8 @@ class AIEasy():
             for src, dest in self.get_all_moves('w'):
                 temp_src = self.game.board[src[0]][src[1]]
                 temp_dest = self.game.board[dest[0]][dest[1]]
+                temp_ck = self.game.ck[src[0]][src[1]]
                 if not self.check_transform(src, dest):
-                    print(self.game.pyboard, self.game.board)
-                    if src == (7,4) and dest == (7,6):
-                        print('huhu')
-                        print(self.game.move_to_fen(src,dest))
                     self.game.move(src, dest)
 
                 else:
@@ -197,6 +197,7 @@ class AIEasy():
                     self.game.board[dest[0]][dest[1]] = 'wQ'
                     self.pyboard.push(chess.Move.from_uci(self.game.move_to_fen(src, dest) + 'q'))
                 eval = self.alpha_beta(depth - 1, alpha, beta, True)[0]
+                hash_table[(tuple(map(tuple,self.game.board)), depth-1)] = eval
                 self.game.board[dest[0]][dest[1]] = temp_dest
                 self.game.board[src[0]][src[1]] = temp_src
                 if temp_src == 'wK' and src == (7, 4) and dest == (7, 6):
@@ -206,7 +207,7 @@ class AIEasy():
                     self.game.board[7][3] = ''
                     self.game.board[7][0] = 'wR'
                 self.game.pyboard.pop()
-                self.game.ck[src[0]][src[1]] = 0
+                self.game.ck[src[0]][src[1]] = temp_ck
                 if eval < min_eval:
                     min_eval = eval
                     best_move = (src, dest)

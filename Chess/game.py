@@ -30,6 +30,7 @@ class Game():
             return
         if self.castling(src, dest):
             self.pyboard.push(chess.Move.from_uci(self.move_to_fen(src, dest)))
+            self.string += self.move_to_fen(src, dest)
             return
         self.ck[src[0]][src[1]] = 1
         if not self.remove_piece(src, dest):
