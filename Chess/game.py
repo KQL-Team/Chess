@@ -1,6 +1,10 @@
 import tkinter as tk
 import numpy as np
 import chess
+dict1 = {
+    'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g':6, 'h':7,
+    '1': 7, '2': 6, '3': 5, '4': 4, '5': 3, '6': 2, '7': 1, '8': 0
+}
 dict2 = {0: 'a', 1: 'b', 2: 'c', 3: 'd', 4: 'e', 5: 'f', 6: 'g', 7: 'h'}
 dict3 = {0: '8', 1: '7', 2: '6', 3: '5', 4: '4', 5: '3', 6: '2', 7: '1'}
 
@@ -280,9 +284,9 @@ class Game():
         if self.pyboard.is_game_over():
             if self.pyboard.is_checkmate():
                 if self.pyboard.turn == chess.WHITE:
-                    return (True, 'win')
-                else:
                     return (True, 'lose')
+                else:
+                    return (True, 'win')
             elif self.pyboard.is_stalemate():
                 return (True, 'draw')
             elif self.pyboard.is_insufficient_material():
@@ -299,3 +303,7 @@ class Game():
         str += dict2[dest[1]]
         str += dict3[dest[0]]
         return str
+    def fen_to_move(self, fen):
+        src = (dict1[fen[1]], dict1[fen[0]])
+        dest = (dict1[fen[3]], dict1[fen[2]])
+        return src, dest

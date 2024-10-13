@@ -244,7 +244,7 @@ class AIEasy():
                 legal_string.append(temp)
         if check:
             rand_string = random.choice(legal_string)
-            return self.fen_to_move(rand_string)
+            return self.game.fen_to_move(rand_string)
         _, best_move = self.alpha_beta(self.depth, float('-inf'), float('inf'), True)
         return best_move
 
@@ -255,7 +255,4 @@ class AIEasy():
         if piece == 'bP' and dest[0] == 7:
             return True
         return False
-    def fen_to_move(self, fen):
-        src = (dict1[fen[1]], dict1[fen[0]])
-        dest = (dict1[fen[3]], dict1[fen[2]])
-        return src, dest
+
