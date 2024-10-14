@@ -1,15 +1,19 @@
-import numpy as np
-import time
+import random
+
 import chess
 import chess.engine
+import numpy as np
 import pandas as pd
-import random
+
 data = pd.read_csv('./my_list.csv')
 chess_opening = data.values.tolist()
 chess_opening = [chess[0] for chess in chess_opening]
+
+
 class AIHard():
     def __init__(self, game):
         self.game = game
+
     def one_hot_encode_piece(self, piece):
         global pieces
         arr = np.zeros(len(pieces), dtype=np.uint8)
@@ -17,6 +21,7 @@ class AIHard():
         index = piece_to_index[piece]
         arr[index] = 1
         return arr
+
     def encode_board(self, board):
         board_list = []
         for row in board:
@@ -25,10 +30,12 @@ class AIHard():
                 row_list.append(self.one_hot_encode_piece(piece))
             board_list.append(row_list)
         return np.array(board_list)
+
     def evaluate_board(self, board):
         if self.game.pyboard.is_game_over():
             if self.game.pyboard.turn == chess.WHITE:
                 return 1000000000
+            # Change to absolute reference in your own local device
         with chess.engine.SimpleEngine.popen_uci('C:/Users/Admin/Desktop/IntroAI/Chess/Chess/model/model.exe') as sf:
             result = sf.analyse(board, chess.engine.Limit(depth=10))
             prediction = result['score'].black().score()
@@ -39,6 +46,7 @@ class AIHard():
                     return -1000000
                 else:
                     return 1000000
+
     def select_best_move(self):
         legal_string = []
         check = False
@@ -72,6 +80,7 @@ class AIHard():
         if piece == 'bP' and dest[0] == 7:
             return True
         return False
+
     def get_all_moves(self, player):
         all_moves = []
         for x in range(8):
@@ -80,6 +89,8 @@ class AIHard():
                 if piece != '' and piece[0] == player:
                     for row in range(8):
                         for col in range(8):
-                            if not self.game.restrict((x, y), (row, col)) and not self.game.move_leads_to_check((x, y), (row, col)):
+                            if not self.game.restrict((x, y), (row, col)) and not self.game.move_leads_to_check((x, y),
+                                                                                                                (row,
+                                                                                                                 col)):
                                 all_moves.append(((x, y), (row, col)))
         return all_moves
