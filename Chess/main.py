@@ -11,7 +11,6 @@ from Chess.menu import game_state
 from modes.AIEasy import AIEasy
 from modes.AIHard import AIHard
 from modes import AIHard as AH
-
 chess_img = {}
 end_game_image = []
 game_run = cg.game_run
@@ -66,7 +65,7 @@ def main():
                 white_turn = check_mouse(p, game)
             elif game_state == 2 or game_state == 3:
                 if white_turn:
-                    white_turn, cur_src, cur_dest = check_mouse(p, game)
+                    white_turn = check_mouse(p, game)
     # if game_state == 2:
     #     if white_turn:
     #         white_turn = check_mouse(p, game)
@@ -104,7 +103,7 @@ def main():
     return game_run, game_state
 def draw_game(screen, game, player_move, cur_src, cur_dest):
     if len(player_move) == 1:
-        draw_temp_board(screen, game, player_move)
+        draw_temp_board(screen, game, player_move, cur_src, cur_dest)
 
     else:
         draw_board(screen, cur_src, cur_dest)
@@ -133,7 +132,7 @@ def draw_pieces(screen, board):
                 screen.blit(chess_img[piece], p.Rect(x * p_size, y * p_size, p_size, p_size))
 
 
-def draw_temp_board(screen, game, player_move):
+def draw_temp_board(screen, game, player_move, cur_src, cur_dest):
     colors = [p.Color(235, 236, 208), p.Color("#9A784F"), p.Color('#795C34'), p.Color('#F5F682')]
     for y in range(8):
         for x in range(8):
@@ -144,6 +143,8 @@ def draw_temp_board(screen, game, player_move):
                 pygame.gfxdraw.filled_circle(screen, int((x+0.5) * p_size), int((y+0.5)* p_size), p_size//10, colors[2])
                 if game.remove_piece(player_move[0], (y, x)):
                     p.draw.rect(screen, colors[3], p.Rect(x * p_size, y * p_size, p_size, p_size))
+            if (y, x) == cur_src or (y, x) == cur_dest:
+                p.draw.rect(screen, colors[3], p.Rect(x * p_size, y * p_size, p_size, p_size))
 
 
 def check_turn(color_turn, player_move, board):
@@ -172,9 +173,7 @@ def black_king(game):
 
 
 def check_mouse(p, game):
-    cur_src = None
-    cur_dest = None
-    global square_select, white_turn
+    global square_select, white_turn, cur_src, cur_dest
     pos = p.mouse.get_pos()
     x = pos[1] // p_size
     y = pos[0] // p_size
@@ -196,7 +195,7 @@ def check_mouse(p, game):
             cur_dest = player_move[1]
         player_move.clear()
         square_select = ()
-    return white_turn, cur_src, cur_dest
+    return white_turn
 
 
 def game_over(screen):
