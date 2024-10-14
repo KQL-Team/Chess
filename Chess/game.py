@@ -307,3 +307,12 @@ class Game():
         src = (dict1[fen[1]], dict1[fen[0]])
         dest = (dict1[fen[3]], dict1[fen[2]])
         return src, dest
+    def move_transform(self, src, dest):
+        piece = self.board[src[0]][src[1]]
+        self.board[src[0]][src[1]] = ''
+        if piece[0] == 'b':
+            self.board[dest[0]][dest[1]] = 'bQ'
+        else:
+            self.board[dest[0]][dest[1]] = 'wQ'
+        self.pyboard.push(chess.Move.from_uci(self.move_to_fen(src, dest)+'q'))
+        self.string += (self.move_to_fen(src, dest) + 'q')

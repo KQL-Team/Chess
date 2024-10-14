@@ -195,7 +195,7 @@ class AIEasy():
                 else:
                     self.game.board[src[0]][src[1]] = ''
                     self.game.board[dest[0]][dest[1]] = 'wQ'
-                    self.pyboard.push(chess.Move.from_uci(self.game.move_to_fen(src, dest) + 'q'))
+                    self.game.pyboard.push(chess.Move.from_uci(self.game.move_to_fen(src, dest) + 'q'))
                 eval = self.alpha_beta(depth - 1, alpha, beta, True)[0]
                 hash_table[(tuple(map(tuple,self.game.board)), depth-1)] = eval
                 self.game.board[dest[0]][dest[1]] = temp_dest
@@ -244,8 +244,9 @@ class AIEasy():
                 legal_string.append(temp)
         if check:
             rand_string = random.choice(legal_string)
-            return self.game.fen_to_move(rand_string)
-        _, best_move = self.alpha_beta(self.depth, float('-inf'), float('inf'), True)
+            if len(rand_string) > 0:
+                return self.game.fen_to_move(rand_string)
+        _, best_move = self.alpha_beta(self.depth, float('-inf'), float('inf'), False)
         return best_move
 
     def check_transform(self, src, dest):

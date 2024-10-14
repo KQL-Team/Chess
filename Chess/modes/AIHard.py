@@ -52,7 +52,8 @@ class AIHard():
                 legal_string.append(temp)
         if check:
             rand_string = random.choice(legal_string)
-            return self.game.fen_to_move(rand_string)
+            if len(rand_string) > 0:
+                return self.game.fen_to_move(rand_string)
         moves = self.get_all_moves('b')
         best_move = None
         max_eval = float('-inf')
@@ -62,7 +63,6 @@ class AIHard():
             else:
                 self.game.pyboard.push(chess.Move.from_uci(self.game.move_to_fen(src, dest) + 'q'))
             eval = self.evaluate_board(self.game.pyboard)
-            print(eval)
             if eval >= max_eval:
                 max_eval = eval
                 best_move = (src, dest)
@@ -87,3 +87,8 @@ class AIHard():
                             if not self.game.restrict((x, y), (row, col)) and not self.game.move_leads_to_check((x, y), (row, col)):
                                 all_moves.append(((x, y), (row, col)))
         return all_moves
+# board = chess.Board('8/8/3K4/7p/1p4b1/p1k3P1/8/3q4 w - - 0 61')
+# with chess.engine.SimpleEngine.popen_uci('C:/Users/Admin/OneDrive - vnu.edu.vn/PycharmProjects/Chess/Chess/model/model.exe') as sf:
+#     result = sf.analyse(board, chess.engine.Limit(depth=10))
+#     prediction = result['score'].black().score()
+#     print(prediction)

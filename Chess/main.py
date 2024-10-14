@@ -63,9 +63,9 @@ def main():
         elif event.type == p.MOUSEBUTTONDOWN :
             if game_state == 1:
                 white_turn = check_mouse(p, game)
-            elif game_state == 2 or game_state == 3:
-                if white_turn:
-                    white_turn = check_mouse(p, game)
+            # elif game_state == 2 or game_state == 3:
+            #     if white_turn:
+            #         white_turn = check_mouse(p, game)
     # if game_state == 2:
     #     if white_turn:
     #         white_turn = check_mouse(p, game)
@@ -73,24 +73,39 @@ def main():
     #         ai_move = ai.select_best_move()
     #         game.move(ai_move[0], ai_move[1])
     #         white_turn = not white_turn
-
+    if game_state == 3 and white_turn:
+        ai_move = ai.select_best_move()
+        if ai_move:
+            piece = game.board[ai_move[0][0]][ai_move[0][1]]
+            if not check_transform(ai_move[0], ai_move[1]):
+                game.move(ai_move[0], ai_move[1])
+            else:
+                game.move_transform(ai_move[0], ai_move[1])
+            cur_src = ai_move[0]
+            cur_dest = ai_move[1]
+            white_turn = not white_turn
     draw_game(screen, game, player_move, cur_src, cur_dest)
     game_over(screen)
 
     clock.tick(FPS)
 
     p.display.flip()
-    if game_state == 2 and not white_turn:
-        ai_move = ai.select_best_move()
-        if ai_move:
-            game.move(ai_move[0], ai_move[1])
-            cur_src = ai_move[0]
-            cur_dest = ai_move[1]
-            white_turn = not white_turn
+    # if game_state == 2 and not white_turn:
+    #     ai_move = ai.select_best_move()
+    #     if ai_move:
+    #         game.move(ai_move[0], ai_move[1])
+    #         cur_src = ai_move[0]
+    #         cur_dest = ai_move[1]
+    #         white_turn = not white_turn
     if game_state == 3 and not white_turn:
         ai_move = ai2.select_best_move()
         if ai_move:
-            game.move(ai_move[0], ai_move[1])
+            piece = game.board[ai_move[0][0]][ai_move[0][1]]
+            if not check_transform(ai_move[0], ai_move[1]):
+
+                game.move(ai_move[0], ai_move[1])
+            else:
+                game.move_transform(ai_move[0], ai_move[1])
             cur_src = ai_move[0]
             cur_dest = ai_move[1]
             white_turn = not white_turn
@@ -239,6 +254,13 @@ def reset_board():
             ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
             ['wR', 'wH', 'wB', 'wQ', 'wK', 'wB', 'wH', 'wR']
         ])
+def check_transform(src, dest):
+        piece = game.board[src[0]][src[1]]
+        if piece == 'wP' and dest[0] == 0:
+            return True
+        if piece == 'bP' and dest[0] == 7:
+            return True
+        return False
 def reset():
     global white_turn
     white_turn = True
