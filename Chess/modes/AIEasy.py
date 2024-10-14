@@ -246,7 +246,7 @@ class AIEasy():
             rand_string = random.choice(legal_string)
             if len(rand_string) > 0:
                 return self.game.fen_to_move(rand_string)
-        _, best_move = self.alpha_beta(self.depth, float('-inf'), float('inf'), False)
+        _, best_move = self.alpha_beta(self.depth, float('-inf'), float('inf'), True)
         return best_move
 
     def check_transform(self, src, dest):
