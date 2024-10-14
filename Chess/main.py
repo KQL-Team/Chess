@@ -31,6 +31,8 @@ ai = AIEasy(game)
 ai2 = AIHard(game)
 square_select = ()
 player_move = []
+cur_src = None
+cur_dest = None
 white_turn = True
 def load_images():
     chess_pieces = ['bR', 'bH', 'bB', 'bQ', 'bK', 'bP', 'wR', 'wH', 'wB', 'wQ', 'wK', 'wP']
@@ -52,7 +54,8 @@ def set_game_state(new_game_state):
     game_state = new_game_state
 
 def main():
-    global game_run, white_turn, game_state
+    global game_run, white_turn, game_state, cur_src, cur_dest
+
     screen.fill(p.Color('white'))
     #print(game_state)
     for event in p.event.get():
@@ -63,7 +66,7 @@ def main():
                 white_turn = check_mouse(p, game)
             elif game_state == 2 or game_state == 3:
                 if white_turn:
-                    white_turn = check_mouse(p, game)
+                    white_turn, cur_src, cur_dest = check_mouse(p, game)
     # if game_state == 2:
     #     if white_turn:
     #         white_turn = check_mouse(p, game)
@@ -72,7 +75,7 @@ def main():
     #         game.move(ai_move[0], ai_move[1])
     #         white_turn = not white_turn
 
-    draw_game(screen, game, player_move)
+    draw_game(screen, game, player_move, cur_src, cur_dest)
     game_over(screen)
 
     clock.tick(FPS)
@@ -82,19 +85,29 @@ def main():
         ai_move = ai.select_best_move()
         if ai_move:
             game.move(ai_move[0], ai_move[1])
+            cur_src = ai_move[0]
+            cur_dest = ai_move[1]
             white_turn = not white_turn
     if game_state == 3 and not white_turn:
         ai_move = ai2.select_best_move()
         if ai_move:
             game.move(ai_move[0], ai_move[1])
+            cur_src = ai_move[0]
+            cur_dest = ai_move[1]
             white_turn = not white_turn
+    draw_game(screen, game, player_move, cur_src, cur_dest)
+    game_over(screen)
+
+    clock.tick(FPS)
+
+    p.display.flip()
     return game_run, game_state
-def draw_game(screen, game, player_move):
+def draw_game(screen, game, player_move, cur_src, cur_dest):
     if len(player_move) == 1:
         draw_temp_board(screen, game, player_move)
 
     else:
-        draw_board(screen)
+        draw_board(screen, cur_src, cur_dest)
     if game.check_white():
         white_king(game)
     if game.check_black():
@@ -102,12 +115,14 @@ def draw_game(screen, game, player_move):
     draw_pieces(screen, game.board)
 
 
-def draw_board(screen):
-    colors = [p.Color(235, 236, 208), p.Color("#9A784F")]
+def draw_board(screen, cur_src, cur_dest):
+    colors = [p.Color(235, 236, 208), p.Color("#9A784F"), p.Color('#F5F682')]
     for y in range(8):
         for x in range(8):
             color = colors[(x + y) % 2]
             p.draw.rect(screen, color, p.Rect(x * p_size, y * p_size, p_size, p_size))
+            if (y, x)  == cur_src or (y, x) == cur_dest:
+                p.draw.rect(screen, colors[2], p.Rect(x * p_size, y * p_size, p_size, p_size))
 
 
 def draw_pieces(screen, board):
@@ -157,6 +172,8 @@ def black_king(game):
 
 
 def check_mouse(p, game):
+    cur_src = None
+    cur_dest = None
     global square_select, white_turn
     pos = p.mouse.get_pos()
     x = pos[1] // p_size
@@ -175,9 +192,11 @@ def check_mouse(p, game):
                                                                                               player_move[1]):
             game.move(player_move[0], player_move[1])
             white_turn = not white_turn
+            cur_src = player_move[0]
+            cur_dest = player_move[1]
         player_move.clear()
         square_select = ()
-    return white_turn
+    return white_turn, cur_src, cur_dest
 
 
 def game_over(screen):

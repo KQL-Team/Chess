@@ -29,7 +29,7 @@ class AIHard():
         if self.game.pyboard.is_game_over():
             if self.game.pyboard.turn == chess.WHITE:
                 return 1000000000
-        with chess.engine.SimpleEngine.popen_uci('C:/Users/Admin/OneDrive - vnu.edu.vn/PycharmProjects/Chess/Chess/stockfish/model.exe') as sf:
+        with chess.engine.SimpleEngine.popen_uci('C:/Users/Admin/OneDrive - vnu.edu.vn/PycharmProjects/Chess/Chess/model/model.exe') as sf:
             result = sf.analyse(board, chess.engine.Limit(depth=10))
             prediction = result['score'].black().score()
             if prediction != None:
