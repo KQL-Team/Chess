@@ -133,18 +133,19 @@ def draw_pieces(screen, board):
 
 
 def draw_temp_board(screen, game, player_move, cur_src, cur_dest):
-    colors = [p.Color(235, 236, 208), p.Color("#9A784F"), p.Color('#795C34'), p.Color('#F5F682')]
+    colors = [p.Color(235, 236, 208), p.Color("#9A784F"), p.Color('#795C34'), p.Color('#F5F682'), p.Color('#FFBF00')]
     for y in range(8):
         for x in range(8):
             color = colors[(x + y) % 2]
             p.draw.rect(screen, color, p.Rect(x * p_size, y * p_size, p_size, p_size))
+            if (y, x) == cur_src or (y, x) == cur_dest:
+                p.draw.rect(screen, colors[3], p.Rect(x * p_size, y * p_size, p_size, p_size))
             if not game.restrict(player_move[0], (y, x)) and not game.move_leads_to_check(player_move[0], (y, x)):
                 pygame.gfxdraw.aacircle(screen, int((x+0.5) * p_size), int((y+0.5) * p_size), p_size//10, colors[2])
                 pygame.gfxdraw.filled_circle(screen, int((x+0.5) * p_size), int((y+0.5)* p_size), p_size//10, colors[2])
                 if game.remove_piece(player_move[0], (y, x)):
-                    p.draw.rect(screen, colors[3], p.Rect(x * p_size, y * p_size, p_size, p_size))
-            if (y, x) == cur_src or (y, x) == cur_dest:
-                p.draw.rect(screen, colors[3], p.Rect(x * p_size, y * p_size, p_size, p_size))
+                    p.draw.rect(screen, colors[4], p.Rect(x * p_size, y * p_size, p_size, p_size))
+
 
 
 def check_turn(color_turn, player_move, board):
