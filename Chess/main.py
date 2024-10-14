@@ -73,7 +73,8 @@ def main():
     #         ai_move = ai.select_best_move()
     #         game.move(ai_move[0], ai_move[1])
     #         white_turn = not white_turn
-
+    draw_game(screen, game, player_move, cur_src, cur_dest)
+    game_over(screen)
     clock.tick(FPS)
 
     p.display.flip()
@@ -88,8 +89,6 @@ def main():
             cur_src = ai_move[0]
             cur_dest = ai_move[1]
             white_turn = not white_turn
-    draw_game(screen, game, player_move, cur_src, cur_dest)
-    game_over(screen)
 
     if game_state == 3 and not white_turn:
         ai_move = ai2.select_best_move()
@@ -103,12 +102,7 @@ def main():
             cur_src = ai_move[0]
             cur_dest = ai_move[1]
             white_turn = not white_turn
-    draw_game(screen, game, player_move, cur_src, cur_dest)
-    game_over(screen)
 
-    clock.tick(FPS)
-
-    p.display.flip()
     return game_run, game_state
 def draw_game(screen, game, player_move, cur_src, cur_dest):
     if len(player_move) == 1:
