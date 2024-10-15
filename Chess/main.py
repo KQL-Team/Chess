@@ -1,4 +1,6 @@
 import sys
+
+import chess
 import pygame
 import pygame as p
 from PIL import Image
@@ -231,7 +233,7 @@ def game_over(screen):
                     game_state = 0
 
 def reset_board():
-    global game
+    global game, cur_src, cur_dest
     game.board = np.array([
             ['bR', 'bH', 'bB', 'bQ', 'bK', 'bB', 'bH', 'bR'],
             ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
@@ -242,6 +244,11 @@ def reset_board():
             ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
             ['wR', 'wH', 'wB', 'wQ', 'wK', 'wB', 'wH', 'wR']
         ])
+    game.pyboard = chess.Board()
+    game.ck = np.zeros((10, 10), dtype=int)
+    game.string = ''
+    cur_src = None
+    cur_dest = None
 def check_transform(src, dest):
         piece = game.board[src[0]][src[1]]
         if piece == 'wP' and dest[0] == 0:
