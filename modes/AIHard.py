@@ -30,8 +30,8 @@ class AIHard():
             if self.game.pyboard.turn == chess.WHITE:
                 return 1000000000
         #Use your own absolute path
-        with chess.engine.SimpleEngine.popen_uci('C:/Users/Admin/OneDrive - vnu.edu.vn/PycharmProjects/Chess/Chess/model/model.exe') as sf:
-            result = sf.analyse(board, chess.engine.Limit(depth=10))
+        with chess.engine.SimpleEngine.popen_uci('C:/Users/Admin/PycharmProjects/Chess/Chess/model/model.exe') as sf:
+            result = sf.analyse(board, chess.engine.Limit(depth=8))
             prediction = result['score'].black().score()
             if prediction != None:
                 return prediction

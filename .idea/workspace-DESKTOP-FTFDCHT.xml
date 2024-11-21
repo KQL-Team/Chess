@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="27ec1a38-4110-42c3-bcf2-86fcbab36a9d" name="Changes" comment="Update">
+      <change beforePath="$PROJECT_DIR$/Chess/chess_model.h5" beforeDir="false" afterPath="$PROJECT_DIR$/Chess/chess_model.h5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Chess/modes/AIHard.py" beforeDir="false" afterPath="$PROJECT_DIR$/Chess/modes/AIHard.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Chess/modes/AIHard_demo.py" beforeDir="false" afterPath="$PROJECT_DIR$/Chess/modes/AIHard_demo.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Jupyter Notebook" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Chess/controller.py" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/Chess/main.py" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/Chess/menu.py" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/Chess/modes/AIEasy.py" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/Chess/modes/AIHard.py" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/Chess/modes/AIHard_demo.py" root0="SKIP_INSPECTION" />
+    <setting file="notebook://C:/Users/Admin/OneDrive - vnu.edu.vn/PycharmProjects/Chess/Chess/test.ipynb" root0="SKIP_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2mW0XitzgBhb4agRNpnKcT7BV6P" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.AIEasy.executor&quot;: &quot;Run&quot;,
+    &quot;Python.AIHard.executor&quot;: &quot;Run&quot;,
+    &quot;Python.__init__.executor&quot;: &quot;Run&quot;,
+    &quot;Python.chess.executor&quot;: &quot;Run&quot;,
+    &quot;Python.controller.executor&quot;: &quot;Run&quot;,
+    &quot;Python.engine.executor&quot;: &quot;Run&quot;,
+    &quot;Python.game.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.menu.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Admin/OneDrive - vnu.edu.vn/PycharmProjects/GPUProject&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Admin\OneDrive - vnu.edu.vn\PycharmProjects\Chess\Chess\modes" />
+      <recent name="C:\Users\Admin\OneDrive - vnu.edu.vn\PycharmProjects\Chess\Chess" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="controller" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Chess" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Chess" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Chess/controller.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.controller" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-PY-241.14494.241" />
+        <option value="bundled-python-sdk-0509580d9d50-28c9f5db9ffe-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-241.14494.241" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="27ec1a38-4110-42c3-bcf2-86fcbab36a9d" name="Changes" comment="" />
+      <created>1727177067728</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1727177067728</updated>
+      <workItem from="1727177069222" duration="274000" />
+      <workItem from="1727178547443" duration="5358000" />
+      <workItem from="1727185025243" duration="754000" />
+      <workItem from="1727186303820" duration="863000" />
+      <workItem from="1727227723282" duration="821000" />
+      <workItem from="1727228562242" duration="4613000" />
+      <workItem from="1727233519247" duration="623000" />
+      <workItem from="1727234245241" duration="5255000" />
+      <workItem from="1727242788345" duration="1960000" />
+      <workItem from="1727273679854" duration="1542000" />
+      <workItem from="1727275244344" duration="222000" />
+      <workItem from="1727279981419" duration="18000" />
+      <workItem from="1727281347799" duration="5000" />
+      <workItem from="1727327289539" duration="5513000" />
+      <workItem from="1727347004048" duration="6559000" />
+      <workItem from="1727365883156" duration="570000" />
+      <workItem from="1727366544385" duration="6319000" />
+      <workItem from="1727405373143" duration="1188000" />
+      <workItem from="1727409641668" duration="875000" />
+      <workItem from="1727412277617" duration="980000" />
+      <workItem from="1727414290636" duration="2590000" />
+      <workItem from="1727418662330" duration="867000" />
+      <workItem from="1727420225513" duration="7534000" />
+      <workItem from="1727431526187" duration="3816000" />
+      <workItem from="1727446061082" duration="146000" />
+      <workItem from="1727449363949" duration="18000" />
+      <workItem from="1727450086779" duration="91000" />
+      <workItem from="1727450277378" duration="4244000" />
+      <workItem from="1727486594089" duration="26000" />
+      <workItem from="1727487387750" duration="377000" />
+      <workItem from="1727499184324" duration="632000" />
+      <workItem from="1727501099670" duration="660000" />
+      <workItem from="1727536438563" duration="10091000" />
+      <workItem from="1727590728995" duration="48000" />
+      <workItem from="1727609767459" duration="1849000" />
+      <workItem from="1727624534090" duration="1201000" />
+      <workItem from="1727682346781" duration="255000" />
+      <workItem from="1727689769766" duration="175000" />
+      <workItem from="1727712117555" duration="23000" />
+      <workItem from="1727770220298" duration="633000" />
+      <workItem from="1727771081094" duration="232000" />
+      <workItem from="1727771480830" duration="1020000" />
+      <workItem from="1727791121650" duration="1627000" />
+      <workItem from="1727798532205" duration="726000" />
+      <workItem from="1727843243038" duration="6489000" />
+      <workItem from="1727882657855" duration="966000" />
+      <workItem from="1727968533790" duration="11643000" />
+      <workItem from="1727981051284" duration="8914000" />
+      <workItem from="1728008440486" duration="895000" />
+      <workItem from="1728036796330" duration="696000" />
+      <workItem from="1728089622378" duration="61000" />
+      <workItem from="1728094978684" duration="684000" />
+      <workItem from="1728112879899" duration="6000" />
+      <workItem from="1728132994654" duration="2079000" />
+      <workItem from="1728195203005" duration="7000" />
+      <workItem from="1728367451478" duration="1397000" />
+      <workItem from="1728375243281" duration="1683000" />
+      <workItem from="1728385502554" duration="9000" />
+      <workItem from="1728388503866" duration="1409000" />
+      <workItem from="1728403999605" duration="765000" />
+      <workItem from="1728481883730" duration="5000" />
+      <workItem from="1728539866282" duration="2504000" />
+      <workItem from="1728542464643" duration="292000" />
+      <workItem from="1728542791173" duration="9963000" />
+      <workItem from="1728554777417" duration="10283000" />
+      <workItem from="1728572288018" duration="9274000" />
+      <workItem from="1728588089144" duration="11000" />
+      <workItem from="1728626277688" duration="2000" />
+      <workItem from="1728628105991" duration="1053000" />
+      <workItem from="1728643291979" duration="5315000" />
+      <workItem from="1728652216912" duration="13570000" />
+      <workItem from="1728692053843" duration="1928000" />
+      <workItem from="1728694066783" duration="2122000" />
+      <workItem from="1728696345930" duration="47000" />
+      <workItem from="1728696462271" duration="4319000" />
+      <workItem from="1728703184077" duration="13095000" />
+      <workItem from="1728717205439" duration="319000" />
+      <workItem from="1728721437779" duration="18011000" />
+      <workItem from="1728748029068" duration="7000" />
+      <workItem from="1728748193636" duration="4000" />
+      <workItem from="1728752456901" duration="125000" />
+      <workItem from="1728795541980" duration="6332000" />
+      <workItem from="1728883831227" duration="1338000" />
+      <workItem from="1728888153705" duration="652000" />
+      <workItem from="1728895859865" duration="7908000" />
+      <workItem from="1728910618831" duration="9346000" />
+      <workItem from="1728922451200" duration="657000" />
+      <workItem from="1728923351700" duration="42000" />
+      <workItem from="1728923552094" duration="559000" />
+      <workItem from="1728924130903" duration="435000" />
+      <workItem from="1728973592131" duration="18852000" />
+      <workItem from="1729008230846" duration="7663000" />
+      <workItem from="1729019953383" duration="4425000" />
+      <workItem from="1729053616189" duration="2432000" />
+      <workItem from="1729059079171" duration="258000" />
+      <workItem from="1729059477569" duration="4206000" />
+      <workItem from="1729067963080" duration="7805000" />
+      <workItem from="1729082403585" duration="2242000" />
+      <workItem from="1729090079823" duration="2817000" />
+      <workItem from="1729098573824" duration="835000" />
+      <workItem from="1729128077230" duration="2454000" />
+      <workItem from="1729170831984" duration="657000" />
+    </task>
+    <task id="LOCAL-00001" summary="Update">
+      <option name="closed" value="true" />
+      <created>1727423526947</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1727423526947</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/main_py$controller.coverage" NAME="controller Coverage Results" MODIFIED="1727427815723" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Chess" />
+    <SUITE FILE_PATH="coverage/menu_py$AIHard.coverage" NAME="AIHard Coverage Results" MODIFIED="1728989394961" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Chess/modes" />
+    <SUITE FILE_PATH="coverage/main_py$chess.coverage" NAME="chess Coverage Results" MODIFIED="1727367036187" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Chess" />
+    <SUITE FILE_PATH="coverage/menu_py$AIEasy.coverage" NAME="AIEasy Coverage Results" MODIFIED="1728697775959" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Chess/modes" />
+    <SUITE FILE_PATH="coverage/menu_py$controller.coverage" NAME="controller Coverage Results" MODIFIED="1729130629456" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Chess" />
+    <SUITE FILE_PATH="coverage/main_py$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1727347878436" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Chess" />
+    <SUITE FILE_PATH="coverage/menu_py$menu.coverage" NAME="menu Coverage Results" MODIFIED="1727431875054" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Chess" />
+    <SUITE FILE_PATH="coverage/Chess$main.coverage" NAME="main Coverage Results" MODIFIED="1727233609395" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Chess" />
+    <SUITE FILE_PATH="coverage/menu_py$chess.coverage" NAME="chess Coverage Results" MODIFIED="1728673563305" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Chess" />
+    <SUITE FILE_PATH="coverage/main_py$main.coverage" NAME="main Coverage Results" MODIFIED="1727367341123" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Chess" />
+    <SUITE FILE_PATH="coverage/main_py$game.coverage" NAME="game Coverage Results" MODIFIED="1727347199814" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Chess" />
+    <SUITE FILE_PATH="coverage/menu_py$main.coverage" NAME="main Coverage Results" MODIFIED="1728989589593" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Chess" />
+    <SUITE FILE_PATH="coverage/main_py$engine.coverage" NAME="engine Coverage Results" MODIFIED="1727347455656" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Chess" />
+    <SUITE FILE_PATH="coverage/main_py$menu.coverage" NAME="menu Coverage Results" MODIFIED="1727350219992" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Chess" />
+  </component>
+</project>
